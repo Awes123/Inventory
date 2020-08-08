@@ -6,11 +6,12 @@ using System.Web.Mvc;
 
 namespace AmeenTraning.Areas.Inventory.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         string Company_Id = string.Empty;
         string UserId = string.Empty;
-       [Authorize]
+       
         // GET: Inventory/Dashboard
         public ActionResult Index()
         {

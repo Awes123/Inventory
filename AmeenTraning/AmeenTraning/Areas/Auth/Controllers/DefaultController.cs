@@ -8,11 +8,12 @@ using System.Web.Mvc;
 
 namespace AmeenTraning.Areas.Auth.Controllers
 {
+    [Authorize(Roles = "Super Admin")]
     public class DefaultController : Controller
     {
         TrainingEntities db = new TrainingEntities();
         // GET: Auth/Default3
-        [Authorize]
+        
         public ActionResult Index()
         {
             HttpCookie myCookie = Request.Cookies["inventoryCookie"];
@@ -35,15 +36,13 @@ namespace AmeenTraning.Areas.Auth.Controllers
             ViewBag.users = db.UserDetails.Where(e=>e.Role!="Super Admin").ToList();
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult Create()
         {
             ViewBag.Companies = db.Company_Details.ToList();
             return View();
         }
-
-        [Authorize]
+        
         [HttpPost]
         public ActionResult Create(string Company_Id, string Name, string Email, string Mobile, string Address, string Age, string Gender, string Password)
         {
@@ -61,8 +60,7 @@ namespace AmeenTraning.Areas.Auth.Controllers
             db.SaveChanges();
             return RedirectToAction("Index", "Default", new { area = "Auth" });
         }
-
-        [Authorize]
+        
         public ActionResult Delete(string UserId)
         {
             int userid = Convert.ToInt32(UserId);
@@ -74,7 +72,6 @@ namespace AmeenTraning.Areas.Auth.Controllers
             }
             return RedirectToAction("Index", "Default", new { area = "Auth" });
         }
-        [Authorize]
         public ActionResult Edit(string UserId)
         {
             ViewBag.Companies = db.Company_Details.ToList();
@@ -84,7 +81,6 @@ namespace AmeenTraning.Areas.Auth.Controllers
 
             return View(user);
         }
-        [Authorize]
         [HttpPost]
         public ActionResult Edit(UserDetail user)
         {

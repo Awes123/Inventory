@@ -22,6 +22,7 @@ namespace AmeenTraning.Models
             this.Products_Details = new HashSet<Products_Details>();
             this.Supplier_Details = new HashSet<Supplier_Details>();
             this.UserDetails = new HashSet<UserDetail>();
+            this.Units_Details = new HashSet<Units_Details>();
         }
     
         public int Company_Id { get; set; }
@@ -48,5 +49,7 @@ namespace AmeenTraning.Models
         public virtual ICollection<Supplier_Details> Supplier_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDetail> UserDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Units_Details> Units_Details { get; set; }
     }
 }

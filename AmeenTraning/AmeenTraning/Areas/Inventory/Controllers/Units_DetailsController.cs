@@ -10,6 +10,7 @@ using AmeenTraning.Models;
 
 namespace AmeenTraning.Areas.Inventory.Controllers
 {
+    [Authorize]
     public class Units_DetailsController : Controller
     {
         private TrainingEntities db = new TrainingEntities();
@@ -17,6 +18,27 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // GET: Inventory/Units_Details
         public ActionResult Index()
         {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (myCookie == null)
+            {
+                return Redirect("/Auth/Login/Logout");
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+            {
+                UserId = myCookie.Values["UserId"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+            {
+                UserName = myCookie.Values["UserName"].ToString();
+            }
             return View(db.Units_Details.ToList());
         }
 
@@ -35,9 +57,11 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return View(units_Details);
         }
 
+
         // GET: Inventory/Units_Details/Create
         public ActionResult Create()
         {
+            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name");
             return View();
         }
 
@@ -46,15 +70,46 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Unit_Id,Company_Id,Name,Date_Created,Date_Modified,Created_By,Modified_By")] Units_Details units_Details)
+        [Authorize]
+        public ActionResult Create(Units_Details units_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Units_Details.Add(units_Details);
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+
+                Units_Details cart = new Units_Details();
+                cart.Created_By = UserName;
+                cart.Date_Created = DateTime.Now;
+                cart.Company_Id = Convert.ToInt32(Company_Id);
+                cart.Name = units_Details.Name;
+                db.Units_Details.Add(cart);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
 
+                //db.units_details.add(units_details);
+                //db.savechanges();
+                //return redirecttoaction("index");
+            }
+            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", units_Details.Company_Id);
             return View(units_Details);
         }
 
@@ -78,11 +133,36 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Unit_Id,Company_Id,Name,Date_Created,Date_Modified,Created_By,Modified_By")] Units_Details units_Details)
+        public ActionResult Edit(Units_Details units_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(units_Details).State = EntityState.Modified;
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+
+                Units_Details cart = db.Units_Details.Find(units_Details.Unit_Id);
+                cart.Modified_By = UserName;
+                cart.Date_Modified = DateTime.Now;
+                cart.Name = units_Details.Name;
+                db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -90,24 +170,8 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/Units_Details/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Units_Details units_Details = db.Units_Details.Find(id);
-            if (units_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(units_Details);
-        }
-
-        // POST: Inventory/Units_Details/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        
+        public ActionResult Delete(int id)
         {
             Units_Details units_Details = db.Units_Details.Find(id);
             db.Units_Details.Remove(units_Details);

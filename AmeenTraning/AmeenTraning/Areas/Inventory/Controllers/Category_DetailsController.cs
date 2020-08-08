@@ -13,10 +13,34 @@ namespace AmeenTraning.Areas.Inventory.Controllers
     public class Category_DetailsController : Controller
     {
         private TrainingEntities db = new TrainingEntities();
+
+        
+
         [Authorize]
         // GET: Inventory/Category_Details
         public ActionResult Index()
         {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (myCookie == null)
+            {
+                return Redirect("/Auth/Login/Logout");
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                  Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+            {
+                 UserId = myCookie.Values["UserId"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+            {
+                 UserName = myCookie.Values["UserName"].ToString();
+            }
             var category_Details = db.Category_Details.Include(c => c.Company_Details);
             return View(category_Details.ToList());
         }
@@ -38,10 +62,32 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         {
             if (ModelState.IsValid)
             {
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                     Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                     UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                     UserName = myCookie.Values["UserName"].ToString();
+                }
+
                 Category_Details cart = new Category_Details();
-                cart.Added_By = Session["UserName"].ToString();
+                cart.Added_By = UserName;
                 cart.Date_Created = DateTime.Now;
-                cart.Company_Id = Convert.ToInt32(Session["Company_ID"]);
+                cart.Company_Id = Convert.ToInt32(Company_Id);
                 cart.Name = category_Details.Name;
                 db.Category_Details.Add(cart);
                 db.SaveChanges();
@@ -75,39 +121,46 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Category_Id,Company_Id,Name,Added_By,Modified_By,Date_Created,Date_Modified")] Category_Details category_Details)
+        public ActionResult Edit(Category_Details category_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category_Details).State = EntityState.Modified;
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+
+                Category_Details cart = db.Category_Details.Find(category_Details.Category_Id);
+                cart.Modified_By = UserName;
+                cart.Date_Modified = DateTime.Now;
+                cart.Name = category_Details.Name;
+                db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", category_Details.Company_Id);
             return View(category_Details);
         }
-
-        // GET: Inventory/Category_Details/Delete/5
-        [Authorize]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category_Details category_Details = db.Category_Details.Find(id);
-            if (category_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category_Details);
-        }
-
         // POST: Inventory/Category_Details/Delete/5
         [Authorize]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Category_Details category_Details = db.Category_Details.Find(id);
             db.Category_Details.Remove(category_Details);

@@ -18,6 +18,7 @@
         <AssociationConnector Association="TrainingModel.FK_Products_Details_Company_Details" />
         <AssociationConnector Association="TrainingModel.FK_Supplier_Details_Company_Details" />
         <AssociationConnector Association="TrainingModel.FK_UserDetails_Company_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Units_Details_Company_Details" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

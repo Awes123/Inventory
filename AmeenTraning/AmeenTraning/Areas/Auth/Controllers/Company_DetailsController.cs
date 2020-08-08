@@ -10,6 +10,7 @@ using AmeenTraning.Models;
 
 namespace AmeenTraning.Areas.Auth.Controllers
 {
+    [Authorize(Roles = "Super Admin")]
     public class Company_DetailsController : Controller
     {
         private TrainingEntities db = new TrainingEntities();

@@ -51,11 +51,36 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Customer_Id,Company_Id,Name,Email,Mobile,Mobile1,Address,City,State,Country,Created_By,Modified_By,Date_Created,Date_Modified")] Customer_Details customer_Details)
+        public ActionResult Create(Customer_Details customer_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Customer_Details.Add(customer_Details);
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+                Customer_Details cust = customer_Details;
+                cust.Company_Id =Convert.ToInt32(Company_Id);
+                cust.Created_By = UserName;
+                cust.Date_Created = DateTime.Now;
+                db.Customer_Details.Add(cust);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -87,39 +112,51 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Customer_Id,Company_Id,Name,Email,Mobile,Mobile1,Address,City,State,Country,Created_By,Modified_By,Date_Created,Date_Modified")] Customer_Details customer_Details)
+        public ActionResult Edit(Customer_Details customer_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer_Details).State = EntityState.Modified;
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return Redirect("/Auth/Login/Logout");
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+                Customer_Details cust = db.Customer_Details.Find(customer_Details.Customer_Id);
+                cust.Address = customer_Details.Address;
+                cust.City = customer_Details.City;
+                cust.Country = customer_Details.Country;
+                cust.Date_Modified = DateTime.Now;
+                cust.Email = customer_Details.Email;
+                cust.Mobile = customer_Details.Mobile;
+                cust.Mobile1 = customer_Details.Mobile1;
+                cust.Modified_By = UserName;
+                cust.Name = customer_Details.Name;
+                cust.State = customer_Details.State;
+                db.Entry(cust).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", customer_Details.Company_Id);
             return View(customer_Details);
         }
-
-        // GET: Inventory/Customer_Details/Delete/5
         [Authorize]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer_Details customer_Details = db.Customer_Details.Find(id);
-            if (customer_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer_Details);
-        }
-
-        // POST: Inventory/Customer_Details/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Customer_Details customer_Details = db.Customer_Details.Find(id);
             db.Customer_Details.Remove(customer_Details);

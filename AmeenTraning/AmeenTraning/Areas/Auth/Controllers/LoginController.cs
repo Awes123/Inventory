@@ -27,6 +27,7 @@ namespace AmeenTraning.Areas.Auth.Controllers
                 //Add key-values in the cookie
                 myCookie.Values.Add("Company_Id", users.Company_Id.ToString());
                 myCookie.Values.Add("UserId", users.UserId.ToString());
+                myCookie.Values.Add("UserName", users.Name.ToString());
 
                 //set cookie expiry date-time. Made it to last for next 12 hours.
                 myCookie.Expires = DateTime.Now.AddHours(1200);
