@@ -1,0 +1,64 @@
+﻿@model IEnumerable<AmeenTraning.Models.Category_Details>
+
+@{
+    ViewBag.Title = "Index";
+    int SR = 0;
+}
+<section>
+    <div class="card mt-2">
+        <div class="card-body">
+            <h5 class="card-title">Categories</h5>
+            <table class="table">
+                <tr>
+                    <th>SR</th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Added by
+                    </th>
+                    <th>
+                        Modified by
+                    </th>
+                    <th>
+                        Date Created
+                    </th>
+                    <th>
+                        Date Modified
+                    </th>
+                    <th>
+                        <a href="/Inventory/Category_Details/Create" class="btn btn-info">Add</a>
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    SR++;
+                    <tr>
+                        <td>@SR</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Added_By)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Modified_By)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date_Created)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date_Modified)
+                        </td>
+                        <td>
+                            <a href="/Inventory/Category_Details/Edit?id=@item.Category_Id" class="btn btn-warning">Edit</a>  
+                            <a href="/Inventory/Category_Details/Delete?id=@item.Category_Id" class="btn btn-danger">Delete</a> 
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</section>

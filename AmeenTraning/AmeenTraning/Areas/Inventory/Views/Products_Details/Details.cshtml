@@ -1,0 +1,82 @@
+﻿@model AmeenTraning.Models.Products_Details
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Products_Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_By)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created_By)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modified_By)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modified_By)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Modified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Modified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category_Details.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category_Details.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company_Details.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company_Details.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Product_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

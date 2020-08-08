@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    int Sr = 0;
+}
+
+<div class="card card-body mt-5">
+    <h4>Users</h4>
+    <table class="table table-bordered">
+        <thead class="btn-default">
+            <tr>
+                <th>Sr</th>
+                <th>Company</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Password</th>
+                <th><a href="/Auth/Default/Create" class="btn btn-info">Add</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AmeenTraning.Models.UserDetail item in ViewBag.users)
+            {
+                Sr++;
+                <tr>
+                    <td>@Sr</td>
+                    <td>@item.Company_Details.Name</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Mobile</td>
+                    <td>@item.Address</td>
+                    <td>@item.Age</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Password</td>
+                    <td><a href="/Auth/Default/Edit?UserId=@item.UserId" class="btn btn-sm btn-warning mr-2">Edit</a><a href="/Auth/Default/Delete?UserId=@item.UserId" class="btn btn-sm btn-danger" style="margin-left:4px">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

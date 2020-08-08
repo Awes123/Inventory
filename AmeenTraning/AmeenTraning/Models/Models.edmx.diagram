@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d313ff1134fc46eebcc162b28649457e" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="TrainingModel.UserDetail" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TrainingModel.Category_Details" Width="1.5" PointX="3" PointY="11.875" />
+        <EntityTypeShape EntityType="TrainingModel.Company_Details" Width="1.5" PointX="2.5" PointY="0.875" />
+        <EntityTypeShape EntityType="TrainingModel.Customer_Details" Width="1.5" PointX="3" PointY="15.375" />
+        <EntityTypeShape EntityType="TrainingModel.Products_Details" Width="1.5" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="TrainingModel.Supplier_Details" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="TrainingModel.Units_Details" Width="1.5" PointX="5.625" PointY="1.25" />
+        <AssociationConnector Association="TrainingModel.FK_Category_Details_Company_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Products_Details_Category_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Customer_Details_Company_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Products_Details_Company_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Supplier_Details_Company_Details" />
+        <AssociationConnector Association="TrainingModel.FK_UserDetails_Company_Details" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

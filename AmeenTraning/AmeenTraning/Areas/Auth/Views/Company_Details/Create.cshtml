@@ -1,0 +1,63 @@
+﻿@model AmeenTraning.Models.Company_Details
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<section>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Add Companies</h5>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal border p-5">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = " form-control", id = "Name" } })
+                    <label class="form-label" for="Name">Name</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.PrimaryContactPerson, new { htmlAttributes = new { @class = " form-control", id = "PrimaryContactPerson" } })
+                    <label class="form-label" for="PrimaryContactPerson">Contact Person</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = " form-control", id = "Email" } })
+                    <label class="form-label" for="Email">Email</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = " form-control", id = "Mobile" } })
+                    <label class="form-label" for="Mobile">Mobile</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = " form-control", id = "Address" } })
+                    <label class="form-label" for="Address">Address</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = " form-control", id = "City" } })
+                    <label class="form-label" for="City">City</label>
+                </div>
+                <div class="form-outline mb-3">
+                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = " form-control", id = "State" } })
+                    <label class="form-label" for="State">State</label>
+                </div>
+                <div class="form-outline mb-3">
+                    <input type="date" class=" form-control" id="Date_Of_Start" name="Date_Of_Start" />
+                    <label class="form-label" for="Date_Of_Start">Start Date</label>
+                </div>
+                <div class="form-outline mb-3">
+                    <input type="date" class="form-control" id="Date_Of_End" name="Date_Of_End" />
+                    <label class="form-label" for="Date_Of_End">End Date</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <a href="/Auth/Company_Details" class="btn btn-warning">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

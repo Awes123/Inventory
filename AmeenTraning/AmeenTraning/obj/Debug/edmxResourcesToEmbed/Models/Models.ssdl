@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category_Details">
+    <Key>
+      <PropertyRef Name="Category_Id" />
+    </Key>
+    <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Added_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Company_Details">
+    <Key>
+      <PropertyRef Name="Company_Id" />
+    </Key>
+    <Property Name="Company_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="PrimaryContactPerson" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Mobile" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_Of_Start" Type="datetime" />
+    <Property Name="Date_Of_End" Type="datetime" />
+    <Property Name="Active_Status" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Customer_Details">
+    <Key>
+      <PropertyRef Name="Customer_Id" />
+    </Key>
+    <Property Name="Customer_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Mobile1" Type="nvarchar" MaxLength="20" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Products_Details">
+    <Key>
+      <PropertyRef Name="Product_Id" />
+    </Key>
+    <Property Name="Product_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Category_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Supplier_Details">
+    <Key>
+      <PropertyRef Name="Supplier_Id" />
+    </Key>
+    <Property Name="Supplier_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Mobile1" Type="nvarchar" MaxLength="20" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Units_Details">
+    <Key>
+      <PropertyRef Name="Unit_Id" />
+    </Key>
+    <Property Name="Unit_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" Nullable="false" />
+    <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+    <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Id" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+    <Property Name="Password" Type="nvarchar" MaxLength="10" />
+    <Property Name="Role" Type="nvarchar" MaxLength="20" />
+    <Property Name="Date_Created" Type="datetime" />
+    <Property Name="Date_Modified" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Category_Details_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="Category_Details" Type="Self.Category_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Category_Details">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_Details_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="Customer_Details" Type="Self.Customer_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Customer_Details">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Details_Category_Details">
+    <End Role="Category_Details" Type="Self.Category_Details" Multiplicity="0..1" />
+    <End Role="Products_Details" Type="Self.Products_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category_Details">
+        <PropertyRef Name="Category_Id" />
+      </Principal>
+      <Dependent Role="Products_Details">
+        <PropertyRef Name="Category_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Details_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="Products_Details" Type="Self.Products_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Products_Details">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Supplier_Details_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="Supplier_Details" Type="Self.Supplier_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Supplier_Details">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserDetails_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="UserDetails">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TrainingModelStoreContainer">
+    <EntitySet Name="Category_Details" EntityType="Self.Category_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company_Details" EntityType="Self.Company_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products_Details" EntityType="Self.Products_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier_Details" EntityType="Self.Supplier_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Units_Details" EntityType="Self.Units_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Category_Details_Company_Details" Association="Self.FK_Category_Details_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="Category_Details" EntitySet="Category_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_Details_Company_Details" Association="Self.FK_Customer_Details_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="Customer_Details" EntitySet="Customer_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Details_Category_Details" Association="Self.FK_Products_Details_Category_Details">
+      <End Role="Category_Details" EntitySet="Category_Details" />
+      <End Role="Products_Details" EntitySet="Products_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Details_Company_Details" Association="Self.FK_Products_Details_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="Products_Details" EntitySet="Products_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Supplier_Details_Company_Details" Association="Self.FK_Supplier_Details_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="Supplier_Details" EntitySet="Supplier_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserDetails_Company_Details" Association="Self.FK_UserDetails_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="UserDetails" EntitySet="UserDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

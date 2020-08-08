@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = null;
+}
+@model AmeenTraning.Models.UserDetail
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Bootstrap-5/css/mdb.min.css" rel="stylesheet" />
+</head>
+<body class="m-0 p-0">
+    <!-- Image and text -->
+    <nav class="navbar navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
+                     height="30"
+                     alt=""
+                     loading="lazy" />
+            </a>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <div id="login-form" class="lgn-form  justify-content-center">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <section class="border p-4 col-md-4 col-lg-offset-4 mb-4">
+                   
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" name="Email" id="form1Example1" class="form-control">
+                            <label class="form-label" for="form1Example1" style="margin-left: 0px;">Email address</label>
+                            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="password"  name="Password" id="form1Example2" class="form-control">
+                            <label class="form-label" for="form1Example2" style="margin-left: 0px;">Password</label>
+                            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 64.8px;"></div><div class="form-notch-trailing"></div></div>
+                        </div>
+
+                        <!-- 2 column grid layout for inline styling -->
+                        <div class="row mb-4">
+                            <div class="col d-flex justify-content-center">
+                                <!-- Checkbox -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked="">
+                                    <label class="form-check-label" for="form1Example3">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <!-- Simple link -->
+                                <a href="#!">Forgot password?</a>
+                            </div>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </section>
+            }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Bootstrap-5/css/mdb.min.css" rel="stylesheet" />
+    <style>
+        .form-outline .form-control {
+            border: 1px solid #bdbdbd !important;
+        }
+
+        body {
+            background-color: #d3eaff !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <!-- Container wrapper -->
+        <div class="container">
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="/Inventory/Dashboard/Index">Inventory</a>
+
+            <!-- Toggle button -->
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left links -->
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Inventory/Dashboard/Index">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-expanded="false">
+                            Create
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="nav-link" href="/Inventory/Category_Details/Index">Category</a></li>
+                            <li><a class="nav-link" href="/Inventory/Products_Details/Index">Products</a></li>
+                            <li><a class="nav-link" href="/Inventory/Units_Details/Index">Units</a></li>
+                            <li>
+                                <a class="nav-link" href="/Inventory/Supplier_Details/Index">Supplier</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="/Inventory/Customer_Details/Index">Customer</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown1"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-expanded="false">
+                            Inventories
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <li><a class="nav-link" href="/Inventory/Purchase/Index">Purchase</a></li>
+                            <li><a class="nav-link" href="/Inventory/Stocks/Index">Stocks</a></li>
+                            <li>
+                                <a class="nav-link" href="/Inventory/Sales/Index">Sales</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown2"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-expanded="false">
+                            Vouchers
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                            <li><a class="nav-link" href="/Inventory/Receipt/Index">Receipt</a></li>
+                            <li><a class="nav-link" href="/Inventory/Payment/Index">Payment</a></li>
+                            <li>
+                                <a class="nav-link" href="/Inventory/Credits/Index">Credits</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Auth/Login/Logout">Logout</a>
+                    </li>
+
+                    <!-- Navbar dropdown -->
+                </ul>
+                <!-- Left links -->
+                <!-- Search form -->
+                <form class="d-flex input-group w-auto">
+                    <input type="search"
+                           class="form-control"
+                           placeholder="Type query"
+                           aria-label="Search" />
+                    <button class="btn btn-outline-primary" type="button" data-ripple-color="dark">
+                        Search
+                    </button>
+                </form>
+            </div>
+            <!-- Collapsible wrapper -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+    <script src="~/Bootstrap-5/js/mdb.min.js"></script>
+    <script src="~/Bootstrap-5/src/js/mdb.free.js"></script>
+</body>
+</html>

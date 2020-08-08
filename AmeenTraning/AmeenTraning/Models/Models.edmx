@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TrainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category_Details">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Added_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Company_Details">
+          <Key>
+            <PropertyRef Name="Company_Id" />
+          </Key>
+          <Property Name="Company_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="PrimaryContactPerson" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Of_Start" Type="datetime" />
+          <Property Name="Date_Of_End" Type="datetime" />
+          <Property Name="Active_Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Customer_Details">
+          <Key>
+            <PropertyRef Name="Customer_Id" />
+          </Key>
+          <Property Name="Customer_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+          <Property Name="Mobile1" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Products_Details">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+          </Key>
+          <Property Name="Product_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Category_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Supplier_Details">
+          <Key>
+            <PropertyRef Name="Supplier_Id" />
+          </Key>
+          <Property Name="Supplier_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+          <Property Name="Mobile1" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Units_Details">
+          <Key>
+            <PropertyRef Name="Unit_Id" />
+          </Key>
+          <Property Name="Unit_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" Nullable="false" />
+          <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Company_Id" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="Date_Modified" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Category_Details_Company_Details">
+          <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+          <End Role="Category_Details" Type="Self.Category_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Category_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Details_Company_Details">
+          <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+          <End Role="Customer_Details" Type="Self.Customer_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Customer_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Details_Category_Details">
+          <End Role="Category_Details" Type="Self.Category_Details" Multiplicity="0..1" />
+          <End Role="Products_Details" Type="Self.Products_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category_Details">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="Products_Details">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Details_Company_Details">
+          <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+          <End Role="Products_Details" Type="Self.Products_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Products_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Details_Company_Details">
+          <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+          <End Role="Supplier_Details" Type="Self.Supplier_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Supplier_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Company_Details">
+          <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrainingModelStoreContainer">
+          <EntitySet Name="Category_Details" EntityType="Self.Category_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company_Details" EntityType="Self.Company_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer_Details" EntityType="Self.Customer_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products_Details" EntityType="Self.Products_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier_Details" EntityType="Self.Supplier_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units_Details" EntityType="Self.Units_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Category_Details_Company_Details" Association="Self.FK_Category_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Category_Details" EntitySet="Category_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Details_Company_Details" Association="Self.FK_Customer_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Customer_Details" EntitySet="Customer_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Details_Category_Details" Association="Self.FK_Products_Details_Category_Details">
+            <End Role="Category_Details" EntitySet="Category_Details" />
+            <End Role="Products_Details" EntitySet="Products_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Details_Company_Details" Association="Self.FK_Products_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Products_Details" EntitySet="Products_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Details_Company_Details" Association="Self.FK_Supplier_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Supplier_Details" EntitySet="Supplier_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Company_Details" Association="Self.FK_UserDetails_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrainingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_UserDetails_Company_Details" FromRole="UserDetail" ToRole="Company_Details" />
+        </EntityType>
+        <EntityContainer Name="TrainingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+          <EntitySet Name="Category_Details" EntityType="TrainingModel.Category_Details" />
+          <EntitySet Name="Company_Details" EntityType="TrainingModel.Company_Details" />
+          <EntitySet Name="Customer_Details" EntityType="TrainingModel.Customer_Details" />
+          <EntitySet Name="Products_Details" EntityType="TrainingModel.Products_Details" />
+          <EntitySet Name="Supplier_Details" EntityType="TrainingModel.Supplier_Details" />
+          <EntitySet Name="Units_Details" EntityType="TrainingModel.Units_Details" />
+          <AssociationSet Name="FK_Category_Details_Company_Details" Association="TrainingModel.FK_Category_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Category_Details" EntitySet="Category_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Details_Category_Details" Association="TrainingModel.FK_Products_Details_Category_Details">
+            <End Role="Category_Details" EntitySet="Category_Details" />
+            <End Role="Products_Details" EntitySet="Products_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Details_Company_Details" Association="TrainingModel.FK_Customer_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Customer_Details" EntitySet="Customer_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Details_Company_Details" Association="TrainingModel.FK_Products_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Products_Details" EntitySet="Products_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Details_Company_Details" Association="TrainingModel.FK_Supplier_Details_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="Supplier_Details" EntitySet="Supplier_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_Company_Details" Association="TrainingModel.FK_UserDetails_Company_Details">
+            <End Role="Company_Details" EntitySet="Company_Details" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category_Details">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Added_By" Type="String" MaxLength="50" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Category_Details_Company_Details" FromRole="Category_Details" ToRole="Company_Details" />
+          <NavigationProperty Name="Products_Details" Relationship="TrainingModel.FK_Products_Details_Category_Details" FromRole="Category_Details" ToRole="Products_Details" />
+        </EntityType>
+        <EntityType Name="Company_Details">
+          <Key>
+            <PropertyRef Name="Company_Id" />
+          </Key>
+          <Property Name="Company_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Of_Start" Type="DateTime" Precision="3" />
+          <Property Name="Date_Of_End" Type="DateTime" Precision="3" />
+          <Property Name="Active_Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category_Details" Relationship="TrainingModel.FK_Category_Details_Company_Details" FromRole="Company_Details" ToRole="Category_Details" />
+          <NavigationProperty Name="Customer_Details" Relationship="TrainingModel.FK_Customer_Details_Company_Details" FromRole="Company_Details" ToRole="Customer_Details" />
+          <NavigationProperty Name="Products_Details" Relationship="TrainingModel.FK_Products_Details_Company_Details" FromRole="Company_Details" ToRole="Products_Details" />
+          <NavigationProperty Name="Supplier_Details" Relationship="TrainingModel.FK_Supplier_Details_Company_Details" FromRole="Company_Details" ToRole="Supplier_Details" />
+          <NavigationProperty Name="UserDetails" Relationship="TrainingModel.FK_UserDetails_Company_Details" FromRole="Company_Details" ToRole="UserDetail" />
+        </EntityType>
+        <EntityType Name="Customer_Details">
+          <Key>
+            <PropertyRef Name="Customer_Id" />
+          </Key>
+          <Property Name="Customer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created_By" Type="String" MaxLength="50" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Customer_Details_Company_Details" FromRole="Customer_Details" ToRole="Company_Details" />
+        </EntityType>
+        <EntityType Name="Products_Details">
+          <Key>
+            <PropertyRef Name="Product_Id" />
+          </Key>
+          <Property Name="Product_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Created_By" Type="String" MaxLength="50" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category_Details" Relationship="TrainingModel.FK_Products_Details_Category_Details" FromRole="Products_Details" ToRole="Category_Details" />
+          <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Products_Details_Company_Details" FromRole="Products_Details" ToRole="Company_Details" />
+        </EntityType>
+        <EntityType Name="Supplier_Details">
+          <Key>
+            <PropertyRef Name="Supplier_Id" />
+          </Key>
+          <Property Name="Supplier_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created_By" Type="String" MaxLength="50" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Supplier_Details_Company_Details" FromRole="Supplier_Details" ToRole="Company_Details" />
+        </EntityType>
+        <EntityType Name="Units_Details">
+          <Key>
+            <PropertyRef Name="Unit_Id" />
+          </Key>
+          <Property Name="Unit_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Company_Id" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="Date_Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created_By" Type="String" MaxLength="50" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Category_Details_Company_Details">
+          <End Type="TrainingModel.Company_Details" Role="Company_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.Category_Details" Role="Category_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Category_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Details_Category_Details">
+          <End Type="TrainingModel.Category_Details" Role="Category_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.Products_Details" Role="Products_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category_Details">
+              <PropertyRef Name="Category_Id" />
+            </Principal>
+            <Dependent Role="Products_Details">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Details_Company_Details">
+          <End Type="TrainingModel.Company_Details" Role="Company_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.Customer_Details" Role="Customer_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Customer_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Details_Company_Details">
+          <End Type="TrainingModel.Company_Details" Role="Company_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.Products_Details" Role="Products_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Products_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Details_Company_Details">
+          <End Type="TrainingModel.Company_Details" Role="Company_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.Supplier_Details" Role="Supplier_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="Supplier_Details">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_Company_Details">
+          <End Type="TrainingModel.Company_Details" Role="Company_Details" Multiplicity="0..1" />
+          <End Type="TrainingModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company_Details">
+              <PropertyRef Name="Company_Id" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrainingModelStoreContainer" CdmEntityContainer="TrainingEntities">
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="TrainingModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Category_Details">
+              <MappingFragment StoreEntitySet="Category_Details">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Added_By" ColumnName="Added_By" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Company_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Company_Details">
+              <MappingFragment StoreEntitySet="Company_Details">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Active_Status" ColumnName="Active_Status" />
+                <ScalarProperty Name="Date_Of_End" ColumnName="Date_Of_End" />
+                <ScalarProperty Name="Date_Of_Start" ColumnName="Date_Of_Start" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PrimaryContactPerson" ColumnName="PrimaryContactPerson" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Customer_Details">
+              <MappingFragment StoreEntitySet="Customer_Details">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile1" ColumnName="Mobile1" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Products_Details">
+              <MappingFragment StoreEntitySet="Products_Details">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Supplier_Details">
+              <MappingFragment StoreEntitySet="Supplier_Details">
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile1" ColumnName="Mobile1" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="Supplier_Id" ColumnName="Supplier_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units_Details">
+            <EntityTypeMapping TypeName="TrainingModel.Units_Details">
+              <MappingFragment StoreEntitySet="Units_Details">
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+                <ScalarProperty Name="Unit_Id" ColumnName="Unit_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

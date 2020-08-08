@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AmeenTraning.Models.Company_Details>
+
+@{
+    ViewBag.Title = "Index";
+    int sr = 0;
+}
+
+<section>
+    <div class="card mt-5">
+        <div class="card-body">
+            <h5 class="card-title">Companies</h5>
+            <a href="/Auth/Company_Details/Create" class="btn btn-info">Add</a>
+            <!-- Accordion wrapper -->
+            <div class="accordion" id="accordionExample">
+                @foreach (var item in Model)
+                {
+                    sr++;
+                    var heading = "heading" + sr;
+                    var collapse = "collapse" + sr;
+                    <div id="@heading">
+                        <h2>
+                            <button class="btn btn-link btn-block text-left pl-3"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#@collapse"
+                                    aria-expanded="true"
+                                    aria-controls="@collapse">
+                                @item.Name (@item.Active_Status)
+                                <span class="float-right">
+                                    <a href="/Auth/Company_Details/Edit/@item.Company_Id" class="btn btn-warning">Edit</a>   
+                                    <a href="/Auth/Company_Details/Delete/@item.Company_Id" class="btn btn-warning">Delete</a>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="@collapse"
+                         class="collapse  pl-3"
+                         aria-labelledby="@heading"
+                         data-parent="#accordionExample">
+                        <div class="d-flex">
+                            <div class="col-md-6">
+                                <h4>@item.PrimaryContactPerson</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6"><small>@item.Email</small></div>
+                                    <div class="col-md-6"><small>@item.Mobile</small></div>
+                                </div>
+                                <div>
+                                    <h6>
+                                        Start : 
+                                        @item.Date_Of_Start
+                                    </h6> 
+                                    <h6>End : @item.Date_Of_End</h6>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    @item.Address
+                                    <br />
+                                    @item.City
+                                    <br />
+                                    @item.State
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

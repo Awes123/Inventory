@@ -1,0 +1,75 @@
+﻿@model IEnumerable<AmeenTraning.Models.Products_Details>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created_By)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified_By)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category_Details.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Details.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Modified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category_Details.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company_Details.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Product_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Product_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Product_Id })
+        </td>
+    </tr>
+}
+
+</table>
