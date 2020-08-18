@@ -10,7 +10,6 @@ using AmeenTraning.Models;
 
 namespace AmeenTraning.Areas.Inventory.Controllers
 {
-    [Authorize]
     public class Units_DetailsController : Controller
     {
         private TrainingEntities db = new TrainingEntities();
@@ -19,14 +18,31 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         public ActionResult Index()
         {
             string Company_Id = string.Empty;
-            string UserId = string.Empty;
-            string UserName = string.Empty;
-
+          
             HttpCookie myCookie = Request.Cookies["inventoryCookie"];
             if (myCookie == null)
             {
                 return Redirect("/Auth/Login/Logout");
             }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+           
+
+            int company_Id = Convert.ToInt32(Company_Id);
+            ViewBag.Units = db.Units_Details.Where(e => e.Company_Id == company_Id).ToList();
+            return View();
+        }
+
+        public PartialViewResult IndexPartial()
+        {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            
             if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
             {
                 Company_Id = myCookie.Values["Company_Id"].ToString();
@@ -39,11 +55,12 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             {
                 UserName = myCookie.Values["UserName"].ToString();
             }
-            return View(db.Units_Details.ToList());
-        }
 
-        // GET: Inventory/Units_Details/Details/5
-        public ActionResult Details(int? id)
+            int company_Id = Convert.ToInt32(Company_Id);
+            return PartialView(db.Units_Details.ToList());
+        }
+            // GET: Inventory/Units_Details/Details/5
+            public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -75,13 +92,57 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         {
             if (ModelState.IsValid)
             {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (myCookie == null)
+            {
+                return Redirect("/Auth/Login/Logout");
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+            {
+                UserId = myCookie.Values["UserId"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+            {
+                UserName = myCookie.Values["UserName"].ToString();
+            }
+
+            Units_Details cart = new Units_Details();
+            cart.Created_By = UserName;
+            cart.Date_Created = DateTime.Now;
+            cart.Company_Id = Convert.ToInt32(Company_Id);
+            cart.Name = units_Details.Name;
+            db.Units_Details.Add(cart);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+           
+                //db.units_details.add(units_details);
+                //db.savechanges();
+                //return redirecttoaction("index");
+            }
+    //        ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", units_Details.Company_Id);
+            return View(units_Details);
+        }
+
+        public string Add(string name)
+        {
+            string Returns = "";
+            if (ModelState.IsValid)
+            {
                 string Company_Id = string.Empty;
                 string UserId = string.Empty;
                 string UserName = string.Empty;
+
                 HttpCookie myCookie = Request.Cookies["inventoryCookie"];
                 if (myCookie == null)
                 {
-                    return Redirect("/Auth/Login/Logout");
+                    return "Logout";
                 }
                 if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
                 {
@@ -95,24 +156,28 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                 {
                     UserName = myCookie.Values["UserName"].ToString();
                 }
+                int company_Id = Convert.ToInt32(Company_Id);
 
-                Units_Details cart = new Units_Details();
-                cart.Created_By = UserName;
-                cart.Date_Created = DateTime.Now;
-                cart.Company_Id = Convert.ToInt32(Company_Id);
-                cart.Name = units_Details.Name;
-                db.Units_Details.Add(cart);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Units_Details units = db.Units_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
 
-                //db.units_details.add(units_details);
-                //db.savechanges();
-                //return redirecttoaction("index");
+                if (units == null)
+                {
+                    Units_Details units_Details = new Units_Details();
+                    units_Details.Company_Id = company_Id;
+                    units_Details.Created_By = UserName;
+                    units_Details.Date_Created = DateTime.Now;
+                    units_Details.Name = name;
+                    db.Units_Details.Add(units_Details);
+                    db.SaveChanges();
+                    return "Product Added Successfully";
+                }
+                else
+                {
+                    return "Product Already Exist";
+                }
             }
-            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", units_Details.Company_Id);
-            return View(units_Details);
+            return Returns;
         }
-
         // GET: Inventory/Units_Details/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -133,36 +198,11 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Units_Details units_Details)
+        public ActionResult Edit([Bind(Include = "Unit_Id,Company_Id,Name,Date_Created,Date_Modified,Created_By,Modified_By")] Units_Details units_Details)
         {
             if (ModelState.IsValid)
             {
-                string Company_Id = string.Empty;
-                string UserId = string.Empty;
-                string UserName = string.Empty;
-                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
-                if (myCookie == null)
-                {
-                    return Redirect("/Auth/Login/Logout");
-                }
-                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
-                {
-                    Company_Id = myCookie.Values["Company_Id"].ToString();
-                }
-                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
-                {
-                    UserId = myCookie.Values["UserId"].ToString();
-                }
-                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
-                {
-                    UserName = myCookie.Values["UserName"].ToString();
-                }
-
-                Units_Details cart = db.Units_Details.Find(units_Details.Unit_Id);
-                cart.Modified_By = UserName;
-                cart.Date_Modified = DateTime.Now;
-                cart.Name = units_Details.Name;
-                db.Entry(cart).State = EntityState.Modified;
+                db.Entry(units_Details).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -170,8 +210,24 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/Units_Details/Delete/5
-        
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Units_Details units_Details = db.Units_Details.Find(id);
+            if (units_Details == null)
+            {
+                return HttpNotFound();
+            }
+            return View(units_Details);
+        }
+
+        // POST: Inventory/Units_Details/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
             Units_Details units_Details = db.Units_Details.Find(id);
             db.Units_Details.Remove(units_Details);

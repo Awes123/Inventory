@@ -357,6 +357,12 @@
     <Content Include="Areas\Inventory\Views\Supplier_Details\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\Supplier_Details\Edit.cshtml" />
     <Content Include="Areas\Inventory\Views\Supplier_Details\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\Category_Details\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Customer_Details\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Products_Details\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Supplier_Details\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Units_Details\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Category_Details\CreatePartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

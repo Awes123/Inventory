@@ -17,8 +17,47 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // GET: Inventory/Products_Details
         public ActionResult Index()
         {
+            string Company_Id = string.Empty;
+            
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (myCookie == null)
+            {
+                return Redirect("/Auth/Login/Logout");
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            int company_Id = Convert.ToInt32(Company_Id);
+            ViewBag.Category = db.Category_Details.Where(e => e.Company_Id == company_Id).ToList();
+
+            return View();
+           
+        }
+
+        public PartialViewResult IndexPartial()
+        {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+          
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+            {
+                UserId = myCookie.Values["UserId"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+            {
+                UserName = myCookie.Values["UserName"].ToString();
+            }
+            int company_Id = Convert.ToInt32(Company_Id);
             var products_Details = db.Products_Details.Include(p => p.Category_Details).Include(p => p.Company_Details);
-            return View(products_Details.ToList());
+            return PartialView(products_Details.ToList());
         }
 
         // GET: Inventory/Products_Details/Details/5
@@ -61,6 +100,56 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             ViewBag.Category_Id = new SelectList(db.Category_Details, "Category_Id", "Name", products_Details.Category_Id);
             ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", products_Details.Company_Id);
             return View(products_Details);
+        }
+
+        public string Add(string category, string name, string Description)
+        {
+            string Returns = "";
+            if (ModelState.IsValid)
+            {
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return "Logout";
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+                int company_Id = Convert.ToInt32(Company_Id);
+
+                Products_Details prd = db.Products_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
+
+                if (prd == null)
+                { 
+                   Products_Details products_Details = new Products_Details();    
+                   products_Details.Company_Id = company_Id;
+                   products_Details.Category_Id = Convert.ToInt32(category);
+                   products_Details.Created_By = UserName;
+                   products_Details.Date_Created = DateTime.Now;
+                   products_Details.Description = Description;
+                   products_Details.Name = name;
+                   db.Products_Details.Add(products_Details);
+                   db.SaveChanges();
+                   return "Product Added Successfully";
+                } else
+                {
+                   return "Product Already Exist";
+                }           
+            }
+            return Returns;
         }
 
         // GET: Inventory/Products_Details/Edit/5

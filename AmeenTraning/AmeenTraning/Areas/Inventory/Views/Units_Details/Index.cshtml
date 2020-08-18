@@ -1,66 +1,121 @@
-﻿@model IEnumerable<AmeenTraning.Models.Units_Details>
+﻿
 
 @{
     ViewBag.Title = "Index";
-    int SR = 0;
+    
 }
 
 <section>
     <div class="card mt-2">
         <div class="card-body">
             <h5 class="card-title">Units</h5>
+    
             <table class="table">
-                <tr>
-                    <th>SR</th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Added by
-                    </th>
-                    <th>
-                        Modified by
-                    </th>
-                    <th>
-                        Date Created
-                    </th>
-                    <th>
-                        Date Created
-                    </th>
-                    <th>
-                        <a href="/Inventory/Units_Details/Create" class="btn btn-info">Add</a>
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
-                    SR++;
+                <thead>
                     <tr>
-                        <td>@SR</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Created_By)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Modified_By)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date_Created)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date_Modified)
-                        </td>
-                        <td>
-                            <a href="/Inventory/Units_Details/Edit?id=@item.Unit_Id" class="btn btn-warning">Edit</a>
-                            <a href="/Inventory/Units_Details/Delete?id=@item.Unit_Id" class="btn btn-danger">Delete</a>
-                        </td>
+                        <th>SR</th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Added by
+                        </th>
+                        <th>
+                            Modified by
+                        </th>
+                        <th>
+                            Date Created
+                        </th>
+                        <th>
+                            Date Modified
+                        </th>
+                        <th>
+                            <div>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#basicExampleModal">
+                                    Add
+                                </button>
+                            </div>
+                        </th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @Html.Action("IndexPartial", "Units_Details", new { area = "Inventory" })
+                </tbody>
 
             </table>
+
+            <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form1Example13" name="Name" class="form-control mb-4">
+                                <label class="form-label" for="form1Example3">Name</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <label class="text-danger"></label>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btnSubmit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    //$(document).ready(function () {
+    //    alert("ready!");
+    //});
+
+    $(document).on('click', '.btnSubmit', function () {
+
+        var name = $('input[name="Name"]').val();
+
+        $('label.text-danger').empty();
+        if (name == "") {
+            $('label.text-danger').append('Please Enter Your Name');
+            return false;
+        }
+       
+        $.post('/Inventory/Units_Details/Add', {name },
+            function (data, status) {
+                alert(data);
+                LoadProjects();
+                $('input[name="Name"]').val('');
+                $('input[name="Description"]').val('');
+                $('#basicExampleModal').modal('toggle');
+            });
+
+    });
+    function LoadProjects() {
+        $.get('/Inventory/Units_Details/IndexPartial', function (response) {
+            $('tbody').empty();
+            $('tbody').append(response);
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
 

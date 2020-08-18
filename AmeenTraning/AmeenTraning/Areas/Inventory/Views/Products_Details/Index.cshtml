@@ -1,16 +1,228 @@
-﻿@model IEnumerable<AmeenTraning.Models.Products_Details>
+﻿
 
 @{
     ViewBag.Title = "Index";
+   
 }
 
-<h2>Index</h2>
+<section>
+    <div class="card mt-2">
+        <div class="card-body">
+            <h5 class="card-title">Customers</h5>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sr</th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Createad By
+                        </th>
+                        <th>
+                            Modified By
+                        </th>
+                        <th>
+                            Date Created
+                        </th>
+                        <th>
+                            Date Modified
+                        </th>
+                        @*<th> <a href="/Inventory/Products_Details/Create" class="btn btn-info"> Add </a></th>*@
+
+                        <th>
+                            <div>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#basicExampleModal">
+                                    Add
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.Action("IndexPartial", "Products_Details", new { area = "Inventory" })
+                </tbody>
+            </table>
+
+            <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-outline mb-4">
+                                <select name="ddlCategory" class="form-control" id="form1Example1">
+                                    @foreach (AmeenTraning.Models.Category_Details item in ViewBag.Category)
+                                    {
+                                        <option value="@item.Category_Id">@item.Name</option>
+                                    }
+                                </select>
+                                <label class="form-label" for="form1Example1">Category</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form1Example13" name="Name" class="form-control mb-4">
+                                <label class="form-label" for="form1Example3">Name</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input id="form1Example12" name="Description" class="form-control mb-4">
+                                <label class="form-label" for="form1Example2">Description</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <label class="text-danger"></label>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btnSubmit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+
+    $(document).on('click', '.btnSubmit', function () {
+
+        var category = $('select[name="ddlCategory"]').val();
+        var name = $('input[name="Name"]').val();
+        var Description = $('input[name="Description"]').val();
+
+        $('label.text-danger').empty();
+        if (name == "") {
+            $('label.text-danger').append('Please Enter Your Name');
+            return false;
+        }
+        if (Description == "") {
+            $('label.text-danger').append('Please Enter Description');
+            return false;
+        }
+        $.post('/Inventory/Products_Details/Add', { category, name, Description },
+            function (data, status) {
+                alert(data);
+                LoadProjects();
+                $('input[name="Name"]').val('');
+                $('input[name="Description"]').val('');
+                $('#basicExampleModal').modal('toggle');
+            });
+
+    });
+
+    function LoadProjects() {
+        $.get('/Inventory/Products_Details/IndexPartial', function (response) {
+            $('tbody').empty();
+            $('tbody').append(response);
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@foreach (var item in Model)
+            {
+                Sr++;
+            <tr>
+                <td class="text-center">@Sr</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category_Details.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created_By)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modified_By)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Modified)
+                </td>
+
+                @*<td>
+        @Html.DisplayFor(modelItem => item.Company_Details.Name)
+    </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Product_Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Product_Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Product_Id })
+                </td>
+                <td>
+                    <a href="/Inventory/Products_Details/Edit?id=@item.Product_Id" class="btn btn-info">Edit</a> |
+                    <a href="/Inventory/Products_Details/Delete?id=@item.Product_Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            }*@
+
+
+
+
+
+
+
+
+
+
+
+
+@*<tr>
+        <th>Sr</th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -36,40 +248,4 @@
             @Html.DisplayNameFor(model => model.Company_Details.Name)
         </th>
         <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modified_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Modified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category_Details.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company_Details.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Product_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Product_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Product_Id })
-        </td>
-    </tr>
-}
-
-</table>
+    </tr>*@

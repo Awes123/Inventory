@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AmeenTraning.Models.Category_Details>
+﻿
 
 @{
     ViewBag.Title = "Index";
@@ -6,59 +6,70 @@
 }
 <section>
     <div class="card mt-2">
-        <div class="card-body">
+        <section class="card-body">
             <h5 class="card-title">Categories</h5>
-            <table class="table">
-                <tr>
-                    <th>SR</th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Added by
-                    </th>
-                    <th>
-                        Modified by
-                    </th>
-                    <th>
-                        Date Created
-                    </th>
-                    <th>
-                        Date Created
-                    </th>
-                    <th>
-                        <a href="/Inventory/Category_Details/Create" class="btn btn-info">Add</a>
-                    </th>
-                </tr>
+            <div class="formtabl">
+                @Html.Action("IndexPartial", "Category_Details", new { area = "Inventory" })
+            </div>
+            <section class="btns hidden">
+                <button class="btnSubmit btn btn-primary">Save</button>
+                <button class="btnCancel btn btn-danger">Cancel</button>
 
-                @foreach (var item in Model)
-                {
-                    SR++;
-                    <tr>
-                        <td>@SR</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Added_By)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Modified_By)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date_Created)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date_Modified)
-                        </td>
-                        <td>
-                            <a href="/Inventory/Category_Details/Edit?id=@item.Category_Id" class="btn btn-warning">Edit</a>  
-                            <a href="/Inventory/Category_Details/Delete?id=@item.Category_Id" class="btn btn-danger">Delete</a> 
-                        </td>
-                    </tr>
-                }
-
-            </table>
+            </section>
         </div>
-    </div>
 </section>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    var Id=0;
+    $(document).on('click', '.btnadd', function () {
+        $.get('/Inventory/Category_Details/CreatePartial', function (response) {
+            $('.btns').removeClass('hidden');
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+        });
+    });
+    $(document).on('click', '.btnEdit', function () {
+        debugger
+        var id = $(this).attr('Id');
+        Id = id;
+        $.get('/Inventory/Category_Details/CreatePartial?id=' + id, function (response) {
+            $('.btns').removeClass('hidden');
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+        });
+    })
+    $(document).on('click', '.btnCancel', function () {
+        $.get('/Inventory/Category_Details/IndexPartial', function (response) {
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+            $('.btns').addClass('hidden');
+            Id = 0;
+        });
+    })
+    $(document).on('click', '.btnSubmit', function () {
+        debugger
+        $('tbody').empty();
+
+        var name = $('input[name="Name"]').val();
+        $('label.text-danger').empty();
+        if (name == "") {
+            $('label.text-danger').append('Please Enter Name');
+            return false;
+        }
+        $.post('/Inventory/Category_Details/Add', { name, Id},
+            function (data, status) {
+                alert(data);
+                LoadProjects();
+                $('input[name="Name"]').val('');
+                $('input[name="Description"]').val('');
+            });
+    });
+    function LoadProjects() {
+        $.get('/Inventory/Category_Details/IndexPartial', function (response) {
+            debugger
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+            $('.btns').addClass('hidden');
+        });
+    }
+</script>

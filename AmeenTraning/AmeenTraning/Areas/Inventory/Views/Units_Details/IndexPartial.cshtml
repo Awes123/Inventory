@@ -1,0 +1,34 @@
+﻿@model IEnumerable<AmeenTraning.Models.Units_Details>
+
+@{
+
+    int SR = 0;
+}
+
+@foreach (var item in Model)
+{
+    SR++;
+    <tr>
+        <td>@SR</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Modified)
+        </td>
+        <td>
+            <a href="/Inventory/Units_Details/Edit?id=@item.Unit_Id" class="btn btn-info">Edit</a>
+            <a href="/Inventory/Units_Details/Delete?id=@item.Unit_Id" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+}
+

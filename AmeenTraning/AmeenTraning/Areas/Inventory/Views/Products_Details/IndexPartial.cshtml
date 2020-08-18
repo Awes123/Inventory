@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AmeenTraning.Models.Products_Details>
+
+@{
+    
+    var Sr = 0;
+}
+
+@foreach (var item in Model)
+{
+    Sr++;
+    <tr>
+        <td>@Sr</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category_Details.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified_By)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Modified)
+        </td>
+
+        <td>
+            <a href="/Inventory/Products_Details/Edit?id=@item.Product_Id" class="btn btn-info">Edit</a>
+            <a href="/Inventory/Products_Details/Delete?id=@item.Product_Id" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+}

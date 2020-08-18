@@ -1,105 +1,246 @@
-﻿@model IEnumerable<AmeenTraning.Models.Supplier_Details>
-
+﻿
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<section>
+    <div class="card mt-2">
+        <div class="card-body">
+            <h5 class="card-title">Supplier</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SR</th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Mobile
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Company Name
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+                        <th>
+                            Modified By
+                        </th>
+                        <th>
+                            Date Created
+                        </th>
+                        <th>
+                            Date Modified
+                        </th>
+                        <th>
+                            <div>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#basicExampleModal">
+                                    Add
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.Action("IndexPartial", "Supplier_Details", new { area = "Inventory" })
+                </tbody>
+                <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="form1Example13" name="Name" class="form-control mb-4">
+                                    <label class="form-label" for="form1Example3">Name</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="form1Example14" name="Email" class="form-control mb-4">
+                                    <label class="form-label" for="form1Example3">Email</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="form1Example15" name="Mobile" class="form-control mb-4">
+                                    <label class="form-label" for="form1Example3">Mobile</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="form1Example16" name="Address" class="form-control mb-4">
+                                    <label class="form-label" for="form1Example3">Address</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <label class="text-danger"></label>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary btnSubmit">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </table>
+        </div>
+    </div>
+</section>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mobile1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created_By)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Modified_By)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date_Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date_Modified)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Company_Details.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modified_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Modified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company_Details.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Supplier_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Supplier_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Supplier_Id })
-        </td>
-    </tr>
-}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
 
-</table>
+<script>
+    $(document).on('click', '.btnSubmit', function () {
+
+        var name = $('input[name="Name"]').val();
+        var email = $('input[name="Email"]').val();
+        var mobile = $('input[name="Mobile"]').val();
+        var address = $('input[name="Address"]').val();
+
+        $('label.text-danger').empty();
+        if (name == "") {
+            $('label.text-danger').append('Please Enter Your Name');
+            return false;
+        }
+        if (email == "") {
+            $('label.text-danger').append('Please Enter Your Email');
+            return false;
+        }
+        if (mobile == "") {
+            $('label.text-danger').append('Please Enter Your Mobile NO');
+            return false;
+        }
+        if (address == "") {
+            $('label.text-danger').append('Please Enter Your Address');
+            return false;
+        }
+
+        $.post('/Inventory/Supplier_Details/Add', { name, email, mobile, address },
+            function (data, status) {
+                alert(data);
+                LoadProjects();
+                $('input[name="Name"]').val('');
+                $('input[name="Email"]').val('');
+                $('input[name="Mobile"]').val('');
+                $('input[name="Address"]').val('');
+                $('#basicExampleModal').modal('toggle');
+            });
+        function LoadProjects() {
+            $.get('/Inventory/Supplier_Details/IndexPartial', function (response) {
+                $('tbody').empty();
+                $('tbody').append(response);
+            });
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+       <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form1Example13" name="Name" class="form-control mb-4">
+                                <label class="form-label" for="form1Example3">Name</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input id="form1Example14" name="Email" class="form-control mb-4">
+                                <label class="form-label" for="form1Example2">Email</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input id="form1Example15" name="Mobile" class="form-control mb-4">
+                                <label class="form-label" for="form1Example2">Mobile</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <textarea id="form1Example16" name="Address" class="form-control mb-4" />
+                                <label class="form-label" for="form1Example2">Address</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <label class="text-danger"></label>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btnSubmit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div> @*<div class="form-outline mb-4">
+                                          <select name="ddlCategory" class="form-control" id="form1Example1">
+                                              @foreach (AmeenTraning.Models.Category_Details item in ViewBag.Category)
+                                              {
+                                                  <option value="@item.Category_Id">@item.Name</option>
+                                              }
+                                          </select>
+                                          <label class="form-label" for="form1Example1">Category</label>
+                                      </div>
+
+
+
+
+        <th>
+        City
+    </th>
+    <th>
+        State
+    </th>
+    <th>
+        Country
+    </th>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

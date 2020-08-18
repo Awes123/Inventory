@@ -90,7 +90,7 @@
     <Property Name="Company_Id" Type="int" />
     <Property Name="Name" Type="nvarchar" MaxLength="20" />
     <Property Name="Date_Created" Type="datetime" />
-    <Property Name="Date_Modified" Type="datetime" Nullable="false" />
+    <Property Name="Date_Modified" Type="datetime" />
     <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
     <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
   </EntityType>
@@ -171,6 +171,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Units_Details_Company_Details">
+    <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
+    <End Role="Units_Details" Type="Self.Units_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company_Details">
+        <PropertyRef Name="Company_Id" />
+      </Principal>
+      <Dependent Role="Units_Details">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserDetails_Company_Details">
     <End Role="Company_Details" Type="Self.Company_Details" Multiplicity="0..1" />
     <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -210,6 +222,10 @@
     <AssociationSet Name="FK_Supplier_Details_Company_Details" Association="Self.FK_Supplier_Details_Company_Details">
       <End Role="Company_Details" EntitySet="Company_Details" />
       <End Role="Supplier_Details" EntitySet="Supplier_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Units_Details_Company_Details" Association="Self.FK_Units_Details_Company_Details">
+      <End Role="Company_Details" EntitySet="Company_Details" />
+      <End Role="Units_Details" EntitySet="Units_Details" />
     </AssociationSet>
     <AssociationSet Name="FK_UserDetails_Company_Details" Association="Self.FK_UserDetails_Company_Details">
       <End Role="Company_Details" EntitySet="Company_Details" />

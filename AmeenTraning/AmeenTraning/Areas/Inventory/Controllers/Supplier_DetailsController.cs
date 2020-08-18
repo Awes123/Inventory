@@ -17,10 +17,47 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // GET: Inventory/Supplier_Details
         public ActionResult Index()
         {
+
+            string Company_Id = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (myCookie == null)
+            {
+                return Redirect("/Auth/Login/Logout");
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
             var supplier_Details = db.Supplier_Details.Include(s => s.Company_Details);
-            return View(supplier_Details.ToList());
+            return View();
         }
 
+        // Partial View
+        public PartialViewResult IndexPartial()
+        {
+            string Company_Id = string.Empty;
+            string UserId = string.Empty;
+            string UserName = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+            {
+                UserId = myCookie.Values["UserId"].ToString();
+            }
+            if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+            {
+                UserName = myCookie.Values["UserName"].ToString();
+            }
+            int company_Id = Convert.ToInt32(Company_Id);
+            //var products_Details = db.Products_Details.Include(p => p.Category_Details).Include(p => p.Company_Details);
+            return PartialView(db.Supplier_Details.ToList());
+        }
         // GET: Inventory/Supplier_Details/Details/5
         public ActionResult Details(int? id)
         {
@@ -61,6 +98,58 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return View(supplier_Details);
         }
 
+        // Add function 
+        public string Add(string name, string email, string mobile, string address)
+        {
+            string Returns = "";
+            if (ModelState.IsValid)
+            {
+                string Company_Id = string.Empty;
+                string UserId = string.Empty;
+                string UserName = string.Empty;
+
+                HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+                if (myCookie == null)
+                {
+                    return "Logout";
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+                {
+                    Company_Id = myCookie.Values["Company_Id"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserId"]))
+                {
+                    UserId = myCookie.Values["UserId"].ToString();
+                }
+                if (!string.IsNullOrEmpty(myCookie.Values["UserName"]))
+                {
+                    UserName = myCookie.Values["UserName"].ToString();
+                }
+                int company_Id = Convert.ToInt32(Company_Id);
+
+                Supplier_Details supplier = db.Supplier_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
+
+                if (supplier == null)
+                {
+                    Supplier_Details supplier_Details = new Supplier_Details();
+                    supplier_Details.Company_Id = company_Id;
+                    supplier_Details.Created_By = UserName;
+                    supplier_Details.Date_Created = DateTime.Now;
+                    supplier_Details.Name = name;
+                    supplier_Details.Email = email;
+                    supplier_Details.Mobile = mobile;
+                    supplier_Details.Address = address;
+                    db.Supplier_Details.Add(supplier_Details);
+                    db.SaveChanges();
+                    return "Product Added Successfully";
+                }
+                else
+                {
+                    return "Product Already Exist";
+                }
+            }
+            return Returns;
+        }
         // GET: Inventory/Supplier_Details/Edit/5
         public ActionResult Edit(int? id)
         {
