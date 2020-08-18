@@ -11,7 +11,7 @@
             <div class="formtabl">
                 @Html.Action("IndexPartial", "Category_Details", new { area = "Inventory" })
             </div>
-            <section class="btns hidden">
+            <section class="btns d-none">
                 <button class="btnSubmit btn btn-primary">Save</button>
                 <button class="btnCancel btn btn-danger">Cancel</button>
 
@@ -23,7 +23,7 @@
     var Id=0;
     $(document).on('click', '.btnadd', function () {
         $.get('/Inventory/Category_Details/CreatePartial', function (response) {
-            $('.btns').removeClass('hidden');
+            $('.btns').removeClass('d-none');
             $('.formtabl').empty();
             $('.formtabl').append(response);
         });
@@ -33,7 +33,7 @@
         var id = $(this).attr('Id');
         Id = id;
         $.get('/Inventory/Category_Details/CreatePartial?id=' + id, function (response) {
-            $('.btns').removeClass('hidden');
+            $('.btns').removeClass('d-none');
             $('.formtabl').empty();
             $('.formtabl').append(response);
         });
@@ -42,14 +42,13 @@
         $.get('/Inventory/Category_Details/IndexPartial', function (response) {
             $('.formtabl').empty();
             $('.formtabl').append(response);
-            $('.btns').addClass('hidden');
+            $('.btns').addClass('d-none');
             Id = 0;
         });
     })
     $(document).on('click', '.btnSubmit', function () {
         debugger
         $('tbody').empty();
-
         var name = $('input[name="Name"]').val();
         $('label.text-danger').empty();
         if (name == "") {
@@ -69,7 +68,7 @@
             debugger
             $('.formtabl').empty();
             $('.formtabl').append(response);
-            $('.btns').addClass('hidden');
+            $('.btns').addClass('d-none');
         });
     }
 </script>

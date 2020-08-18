@@ -97,7 +97,10 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                     UserName = myCookie.Values["UserName"].ToString();
                 }
                 int companyId = Convert.ToInt32(Company_Id);
-                if (Id != 0) { Category_Details cart = db.Category_Details.Where(e => e.Category_Id == Id).FirstOrDefault();
+
+                if (Id != 0)
+                {
+                    Category_Details cart = db.Category_Details.Where(e => e.Category_Id == Id).FirstOrDefault();
                     cart.Modified_By = UserName;
                     cart.Date_Modified = DateTime.Now;
                     cart.Name = name;

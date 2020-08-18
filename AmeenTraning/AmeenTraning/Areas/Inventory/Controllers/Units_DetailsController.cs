@@ -59,7 +59,22 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             int company_Id = Convert.ToInt32(Company_Id);
             return PartialView(db.Units_Details.ToList());
         }
-            // GET: Inventory/Units_Details/Details/5
+        // GET: Inventory/Units_Details/Details/5
+        public PartialViewResult CreatePartial(int ? id)
+        {
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            string Company_Id = string.Empty;
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            Units_Details car = new Units_Details();
+            if (id != null)
+            {
+                car = db.Units_Details.Where(c => c.Unit_Id == id).FirstOrDefault();
+            }
+            return PartialView(car);
+        }
             public ActionResult Details(int? id)
         {
             if (id == null)
@@ -130,7 +145,7 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return View(units_Details);
         }
 
-        public string Add(string name)
+        public string Add(string name, int Id)
         {
             string Returns = "";
             if (ModelState.IsValid)
@@ -157,24 +172,41 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                     UserName = myCookie.Values["UserName"].ToString();
                 }
                 int company_Id = Convert.ToInt32(Company_Id);
-
-                Units_Details units = db.Units_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
-
-                if (units == null)
+             
+               
+                if (Id != 0)
                 {
-                    Units_Details units_Details = new Units_Details();
-                    units_Details.Company_Id = company_Id;
-                    units_Details.Created_By = UserName;
-                    units_Details.Date_Created = DateTime.Now;
-                    units_Details.Name = name;
-                    db.Units_Details.Add(units_Details);
+                    Units_Details units = db.Units_Details.Where(e => e.Unit_Id == Id).FirstOrDefault();
+                    units.Company_Id = company_Id;
+                    units.Created_By = UserName;
+                    units.Date_Created = DateTime.Now;
+                    units.Name = name;
+                    db.Entry(units).State = EntityState.Modified;
                     db.SaveChanges();
-                    return "Product Added Successfully";
+                    return "Unit Updated Successfully";
                 }
-                else
+               else
                 {
-                    return "Product Already Exist";
+                    Units_Details units = db.Units_Details.Where(e => e.Name == name && e.Company_Id == company_Id).FirstOrDefault();
+                    if (units == null)
+                    {
+                        Units_Details units_Details = new Units_Details();
+                        units_Details.Company_Id = company_Id;
+                        units_Details.Created_By = UserName;
+                        units_Details.Date_Created = DateTime.Now;
+                        units_Details.Date_Modified = DateTime.Now;
+                        units_Details.Name = name;
+                        db.Units_Details.Add(units_Details);
+                        db.SaveChanges();
+                        return "Unit Added Successfully";
+                    }
+                    else
+                    {
+                        return "Unit Already Exist";
+                    }
+
                 }
+                
             }
             return Returns;
         }

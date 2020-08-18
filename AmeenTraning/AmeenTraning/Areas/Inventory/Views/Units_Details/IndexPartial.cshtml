@@ -4,31 +4,64 @@
 
     int SR = 0;
 }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SR</th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Added by
+                </th>
+                <th>
+                    Modified by
+                </th>
+                <th>
+                    Date Created
+                </th>
+                <th>
+                    Date Modified
+                </th>
+                <th>
+                    <div>
+                        <button type="button" class="btn btn-primary btnadd">
+                            Add
+                        </button>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                SR++;
+                <tr>
+                    <td>@SR</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created_By)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modified_By)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date_Created)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date_Modified)
+                    </td>
+                    <td>
 
-@foreach (var item in Model)
-{
-    SR++;
-    <tr>
-        <td>@SR</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modified_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Modified)
-        </td>
-        <td>
-            <a href="/Inventory/Units_Details/Edit?id=@item.Unit_Id" class="btn btn-info">Edit</a>
-            <a href="/Inventory/Units_Details/Delete?id=@item.Unit_Id" class="btn btn-danger">Delete</a>
-        </td>
-    </tr>
-}
+                        <button Id="@item.Unit_Id" class="btn btnEdit btn-info">Edit</button>
+                        <a href="/Inventory/Units_Details/Delete?id=@item.Unit_Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
 
