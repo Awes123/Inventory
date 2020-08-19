@@ -59,6 +59,23 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return PartialView(db.Supplier_Details.ToList());
         }
         // GET: Inventory/Supplier_Details/Details/5
+
+        public PartialViewResult CreatePartial(int? id)
+        {
+            string Company_Id = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            Supplier_Details car = new Supplier_Details();
+            if (id != null)
+            {
+                car = db.Supplier_Details.Where(c => c.Supplier_Id == id).FirstOrDefault();
+            }
+            return PartialView(car);
+        }
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -99,7 +116,7 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         }
 
         // Add function 
-        public string Add(string name, string email, string mobile, string address)
+        public string Add(string name, string email, string mobile, string address,int Id)
         {
             string Returns = "";
             if (ModelState.IsValid)
@@ -126,27 +143,46 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                     UserName = myCookie.Values["UserName"].ToString();
                 }
                 int company_Id = Convert.ToInt32(Company_Id);
-
-                Supplier_Details supplier = db.Supplier_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
-
-                if (supplier == null)
+                if (Id != 0)
                 {
-                    Supplier_Details supplier_Details = new Supplier_Details();
-                    supplier_Details.Company_Id = company_Id;
-                    supplier_Details.Created_By = UserName;
-                    supplier_Details.Date_Created = DateTime.Now;
-                    supplier_Details.Name = name;
-                    supplier_Details.Email = email;
-                    supplier_Details.Mobile = mobile;
-                    supplier_Details.Address = address;
-                    db.Supplier_Details.Add(supplier_Details);
+                    Supplier_Details supplier = db.Supplier_Details.Where(e => e.Supplier_Id == Id).FirstOrDefault();
+                    supplier.Company_Id = company_Id;
+                    supplier.Created_By = UserName;
+                    supplier.Date_Created = DateTime.Now;
+                    supplier.Name = name;
+                    supplier.Email = email;
+                    supplier.Date_Modified = DateTime.Now;
+                    supplier.Mobile = mobile;
+                    supplier.Address = address;
+                    db.Entry(supplier).State = EntityState.Modified;
                     db.SaveChanges();
-                    return "Product Added Successfully";
+                    return "Supplier Updated Successfully";
                 }
                 else
                 {
-                    return "Product Already Exist";
+                    Supplier_Details supplier = db.Supplier_Details.Where(e => e.Name == UserName && e.Company_Id == company_Id).FirstOrDefault();
+                    if (supplier == null)
+                    {
+                        Supplier_Details supplier_Details = new Supplier_Details();
+                        supplier_Details.Company_Id = company_Id;
+                        supplier_Details.Created_By = UserName;
+                        supplier_Details.Date_Created = DateTime.Now;
+                        supplier_Details.Name = name;
+                        supplier_Details.Email = email;
+                        supplier_Details.Mobile = mobile;
+                        supplier_Details.Address = address;
+                        db.Supplier_Details.Add(supplier_Details);
+                        db.SaveChanges();
+                        return "Supplier Added Successfully";
+                    }
+                    else
+                    {
+                        return "Supplier Already Exist";
+                    }
+
                 }
+
+               
             }
             return Returns;
         }
