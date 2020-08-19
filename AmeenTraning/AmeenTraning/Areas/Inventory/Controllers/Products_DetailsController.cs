@@ -29,7 +29,7 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                 Company_Id = myCookie.Values["Company_Id"].ToString();
             }
             int company_Id = Convert.ToInt32(Company_Id);
-            ViewBag.Category = db.Category_Details.Where(e => e.Company_Id == company_Id).ToList();
+        
 
             return View();
            
@@ -60,49 +60,28 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return PartialView(products_Details.ToList());
         }
 
-        // GET: Inventory/Products_Details/Details/5
-        public ActionResult Details(int? id)
+        public PartialViewResult CreatePartial(int ? id)
         {
-            if (id == null)
+            string Company_Id = string.Empty;
+
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+           
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Company_Id = myCookie.Values["Company_Id"].ToString();
             }
-            Products_Details products_Details = db.Products_Details.Find(id);
-            if (products_Details == null)
+            int company_Id = Convert.ToInt32(Company_Id);
+            ViewBag.Category = db.Category_Details.Where(e => e.Company_Id == company_Id).ToList();
+            if (id != null)
             {
-                return HttpNotFound();
+                var prod = db.Products_Details.Find(id);
+                ViewBag.Category_Id = prod.Category_Id;
+                ViewBag.Name = prod.Name;
+                ViewBag.Description = prod.Description;
             }
-            return View(products_Details);
+            return PartialView();
         }
-
-        // GET: Inventory/Products_Details/Create
-        public ActionResult Create()
-        {
-            ViewBag.Category_Id = new SelectList(db.Category_Details, "Category_Id", "Name");
-            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name");
-            return View();
-        }
-
-        // POST: Inventory/Products_Details/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Product_Id,Company_Id,Category_Id,Name,Description,Created_By,Modified_By,Date_Created,Date_Modified")] Products_Details products_Details)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Products_Details.Add(products_Details);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Category_Id = new SelectList(db.Category_Details, "Category_Id", "Name", products_Details.Category_Id);
-            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", products_Details.Company_Id);
-            return View(products_Details);
-        }
-
-        public string Add(string category, string name, string Description)
+        public string Add(string category, string name, string Description,int Id)
         {
             string Returns = "";
             if (ModelState.IsValid)
@@ -129,7 +108,18 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                     UserName = myCookie.Values["UserName"].ToString();
                 }
                 int company_Id = Convert.ToInt32(Company_Id);
-
+                if (Id != 0)
+                {
+                    Products_Details prds = db.Products_Details.Find(Id);
+                    prds.Category_Id = Convert.ToInt32(category);
+                    prds.Modified_By = UserName;
+                    prds.Date_Modified = DateTime.Now;
+                    prds.Description = Description;
+                    prds.Name = name;
+                    db.Entry(prds).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return "Product Upadated Successfully";
+                }
                 Products_Details prd = db.Products_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
 
                 if (prd == null)
@@ -151,61 +141,8 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             }
             return Returns;
         }
-
-        // GET: Inventory/Products_Details/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Products_Details products_Details = db.Products_Details.Find(id);
-            if (products_Details == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Category_Id = new SelectList(db.Category_Details, "Category_Id", "Name", products_Details.Category_Id);
-            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", products_Details.Company_Id);
-            return View(products_Details);
-        }
-
-        // POST: Inventory/Products_Details/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Product_Id,Company_Id,Category_Id,Name,Description,Created_By,Modified_By,Date_Created,Date_Modified")] Products_Details products_Details)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(products_Details).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Category_Id = new SelectList(db.Category_Details, "Category_Id", "Name", products_Details.Category_Id);
-            ViewBag.Company_Id = new SelectList(db.Company_Details, "Company_Id", "Name", products_Details.Company_Id);
-            return View(products_Details);
-        }
-
-        // GET: Inventory/Products_Details/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Products_Details products_Details = db.Products_Details.Find(id);
-            if (products_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products_Details);
-        }
-
-        // POST: Inventory/Products_Details/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+       
+        public ActionResult Delete(int id)
         {
             Products_Details products_Details = db.Products_Details.Find(id);
             db.Products_Details.Remove(products_Details);

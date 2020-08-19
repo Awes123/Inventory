@@ -10,98 +10,28 @@
         <div class="card-body">
             <h5 class="card-title">Customers</h5>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Sr</th>
-                        <th>
-                            Category
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Createad By
-                        </th>
-                        <th>
-                            Modified By
-                        </th>
-                        <th>
-                            Date Created
-                        </th>
-                        <th>
-                            Date Modified
-                        </th>
-                        @*<th> <a href="/Inventory/Products_Details/Create" class="btn btn-info"> Add </a></th>*@
-
-                        <th>
-                            <div>
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        data-toggle="modal"
-                                        data-target="#basicExampleModal">
-                                    Add
-                                </button>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @Html.Action("IndexPartial", "Products_Details", new { area = "Inventory" })
-                </tbody>
-            </table>
-
-            <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-outline mb-4">
-                                <select name="ddlCategory" class="form-control" id="form1Example1">
-                                    @foreach (AmeenTraning.Models.Category_Details item in ViewBag.Category)
-                                    {
-                                        <option value="@item.Category_Id">@item.Name</option>
-                                    }
-                                </select>
-                                <label class="form-label" for="form1Example1">Category</label>
-                            </div>
-
-                            <div class="form-outline mb-4">
-                                <input type="text" id="form1Example13" name="Name" class="form-control mb-4">
-                                <label class="form-label" for="form1Example3">Name</label>
-                            </div>
-
-                            <div class="form-outline mb-4">
-                                <input id="form1Example12" name="Description" class="form-control mb-4">
-                                <label class="form-label" for="form1Example2">Description</label>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <label class="text-danger"></label>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary btnSubmit">Save changes</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="formtabl">
+                @Html.Action("IndexPartial", "Products_Details", new { area = "Inventory" })
             </div>
-
+            <section class="btns d-none">
+                <button class="btnSubmit btn btn-primary">Save</button>
+                <button class="btnCancel btn btn-danger">Cancel</button>
+                <label class="text-danger"></label>
+            </section>
         </div>
-    </div>
+        </div>
 </section>
 
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script>
-
+    var Id = 0;
+    $(document).on('click', '.btnadd', function () {
+        $.get('/Inventory/Products_Details/CreatePartial', function (response) {
+            $('.btns').removeClass('d-none');
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+        });
+    });
     $(document).on('click', '.btnSubmit', function () {
 
         var category = $('select[name="ddlCategory"]').val();
@@ -117,9 +47,13 @@
             $('label.text-danger').append('Please Enter Description');
             return false;
         }
-        $.post('/Inventory/Products_Details/Add', { category, name, Description },
+        $.post('/Inventory/Products_Details/Add', { category, name, Description, Id },
             function (data, status) {
-                alert(data);
+                Swal.fire(
+                    'Suceed!',
+                    data,
+                    'success'
+                )
                 LoadProjects();
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
@@ -127,13 +61,54 @@
             });
 
     });
-
+    $(document).on('click', '.btnEdit', function () {
+        debugger
+        var id = $(this).attr('Id');
+        Id = id;
+        $.get('/Inventory/Products_Details/CreatePartial?id=' + id, function (response) {
+            $('.btns').removeClass('d-none');
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+        });
+    })
+    $(document).on('click', '.btnCancel', function () {
+        $.get('/Inventory/Products_Details/IndexPartial', function (response) {
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+            $('.btns').addClass('d-none');
+            Id = 0;
+        });
+    })
     function LoadProjects() {
         $.get('/Inventory/Products_Details/IndexPartial', function (response) {
-            $('tbody').empty();
-            $('tbody').append(response);
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
         });
     }
+    $(document).on('click', '.btndelete', function () {
+        var id = $(this).attr('Id');
+        Id = id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this Unit & related data will also!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                $.get('/Inventory/Products_Details/Delete?id=' + id, function (response) {
+                    LoadProjects();
+                })
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'Unit is active :)',
+                    'error'
+                )
+            }
+        });
+    });
 </script>
 
 
