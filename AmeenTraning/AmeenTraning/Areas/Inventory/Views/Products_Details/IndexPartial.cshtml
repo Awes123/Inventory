@@ -4,37 +4,84 @@
     
     var Sr = 0;
 }
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Sr</th>
+            <th>
+                Category
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Createad By
+            </th>
+            <th>
+                Modified By
+            </th>
+            <th>
+                Date Created
+            </th>
+            <th>
+                Date Modified
+            </th>
+            @*<th> <a href="/Inventory/Products_Details/Create" class="btn btn-info"> Add </a></th>*@
 
-@foreach (var item in Model)
-{
-    Sr++;
-    <tr>
-        <td>@Sr</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category_Details.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modified_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Modified)
-        </td>
+            <th>
+                <div>
+                    <button type="button"
+                            class="btn btn-primary btnadd">
+                        Add
+                    </button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
 
-        <td>
-            <a href="/Inventory/Products_Details/Edit?id=@item.Product_Id" class="btn btn-info">Edit</a>
-            <a href="/Inventory/Products_Details/Delete?id=@item.Product_Id" class="btn btn-danger">Delete</a>
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            Sr++;
+            <tr>
+                <td>@Sr</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category_Details.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created_By)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modified_By)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Modified)
+                </td>
+
+                <td>
+                    <button type="button" Id="@item.Product_Id"
+                            class="btn btn-warning btn-sm btnEdit">
+                        Edit
+                    </button>
+                    <button type="button" Id="@item.Product_Id"
+                            class="btn btn-danger btn-sm btndelete">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

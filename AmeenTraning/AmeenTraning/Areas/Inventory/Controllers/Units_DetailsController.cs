@@ -241,25 +241,8 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return View(units_Details);
         }
 
-        // GET: Inventory/Units_Details/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Units_Details units_Details = db.Units_Details.Find(id);
-            if (units_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(units_Details);
-        }
-
-        // POST: Inventory/Units_Details/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+    
+        public ActionResult Delete(int id)
         {
             Units_Details units_Details = db.Units_Details.Find(id);
             db.Units_Details.Remove(units_Details);

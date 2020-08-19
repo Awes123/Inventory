@@ -14,7 +14,7 @@
             <section class="btns d-none">
                 <button class="btnSubmit btn btn-primary">Save</button>
                 <button class="btnCancel btn btn-danger">Cancel</button>
-
+                <label class="text-danger"></label>
             </section>
         </div>
 </section>
@@ -47,7 +47,6 @@
         });
     })
     $(document).on('click', '.btnSubmit', function () {
-        debugger
         $('tbody').empty();
         var name = $('input[name="Name"]').val();
         $('label.text-danger').empty();
@@ -57,7 +56,11 @@
         }
         $.post('/Inventory/Category_Details/Add', { name, Id},
             function (data, status) {
-                alert(data);
+                Swal.fire(
+                    'Suceed!',
+                    data,
+                    'success'
+                )
                 LoadProjects();
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
@@ -65,10 +68,33 @@
     });
     function LoadProjects() {
         $.get('/Inventory/Category_Details/IndexPartial', function (response) {
-            debugger
             $('.formtabl').empty();
             $('.formtabl').append(response);
             $('.btns').addClass('d-none');
         });
     }
+    $(document).on('click', '.btndelete', function () {
+        var id = $(this).attr('Id');
+        Id = id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this category &  related data will also!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                $.get('/Inventory/Category_Details/Delete?id=' + id, function (response) {
+                    LoadProjects();
+                })
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'Category is active :)',
+                    'error'
+                )
+            }
+        });
+    });
 </script>

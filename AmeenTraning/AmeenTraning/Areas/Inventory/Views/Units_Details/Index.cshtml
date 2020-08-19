@@ -16,7 +16,7 @@
             <section class="btns d-none">
                 <button class="btnSubmit btn btn-primary">Save</button>
                 <button class="btnCancel btn btn-danger">Cancel</button>
-
+                <label class="text-danger"></label>
             </section>
          
 
@@ -26,9 +26,6 @@
 
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script>
-    //$(document).ready(function () {
-    //    alert("ready!");
-    //});
     var Id = 0;
     $(document).on('click', '.btnadd', function () {
         $.get('/Inventory/Units_Details/CreatePartial', function (response) {
@@ -38,19 +35,21 @@
         });
     });
     $(document).on('click', '.btnSubmit', function () {
-
         $('tbody').empty();
         var name = $('input[name="Name"]').val();
-
         $('label.text-danger').empty();
         if (name == "") {
-            $('label.text-danger').append('Please Enter Your Name');
+            $('label.text-danger').append('Please Enter Unit');
             return false;
         }
        
         $.post('/Inventory/Units_Details/Add', { name, Id},
             function (data, status) {
-                alert(data);
+                Swal.fire(
+                    'Suceed!',
+                    data,
+                    'success'
+                )
                 LoadProjects();
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
@@ -67,6 +66,14 @@
             $('.formtabl').append(response);
         });
     })
+    $(document).on('click', '.btnCancel', function () {
+        $.get('/Inventory/Category_Details/IndexPartial', function (response) {
+            $('.formtabl').empty();
+            $('.formtabl').append(response);
+            $('.btns').addClass('d-none');
+            Id = 0;
+        });
+    })
     function LoadProjects() {
         $.get('/Inventory/Units_Details/IndexPartial', function (response) {
             $('.formtabl').empty();
@@ -74,7 +81,30 @@
             $('.btns').addClass('d-none');
         });
     }
-
+    $(document).on('click', '.btndelete', function () {
+        var id = $(this).attr('Id');
+        Id = id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this Unit & related data will also!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                $.get('/Inventory/Units_Details/Delete?id=' + id, function (response) {
+                    LoadProjects();
+                })
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'Unit is active :)',
+                    'error'
+                )
+            }
+        });
+    });
 </script>
 
 

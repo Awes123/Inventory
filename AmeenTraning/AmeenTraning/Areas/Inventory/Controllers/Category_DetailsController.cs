@@ -247,6 +247,9 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
+            var prd = db.Products_Details.Where(e => e.Category_Id == id).ToList();
+            db.Products_Details.RemoveRange(prd);
+            db.SaveChanges();
             Category_Details category_Details = db.Category_Details.Find(id);
             db.Category_Details.Remove(category_Details);
             db.SaveChanges();

@@ -1,0 +1,39 @@
+﻿@{
+    
+}
+
+<div class="form-outline mb-4">
+    <select name="ddlCategory" class="form-control" id="form1Example1">
+        @foreach (AmeenTraning.Models.Category_Details item in ViewBag.Category)
+        {
+            if (ViewBag.Category_Id != null)
+            {
+                if (ViewBag.Category_Id == item.Category_Id)
+                {
+                    <option value="@item.Category_Id" selected>@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.Category_Id">@item.Name</option>
+                }
+            }
+            else
+            {
+                <option value="@item.Category_Id">@item.Name</option>
+
+            }
+
+        }
+    </select>
+    <label class="form-label" for="form1Example1">Category</label>
+</div>
+
+<div class="form-outline mb-4">
+    <input type="text" id="form1Example13" name="Name" value="@ViewBag.Name" class="form-control mb-4">
+    <label class="form-label" for="form1Example3">Name</label>
+</div>
+
+<div class="form-outline mb-4">
+    <input id="form1Example12" name="Description" value="@ViewBag.Description" class="form-control mb-4">
+    <label class="form-label" for="form1Example2">Description</label>
+</div>
