@@ -3,96 +3,98 @@
 @{
     var SR = 0;
 }
-@foreach (var item in Model)
-{
-    SR++;
-    <tr>
-        <td>
-            @SR
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modified_By)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Modified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company_Details.Name)
-        </td>
-        <td>
-            <a href="/Inventory/Customer_Details/Edit?id=@item.Customer_Id" class="btn btn-info">Edit</a>
-            <a href="/Inventory/Customer_Details/Delete?id=@item.Customer_Id" class="btn btn-danger">Delete</a>
-        </td>
-    </tr>
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                SR
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Mobile
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Modified By
+            </th>
+            <th>
+                Date Created
+            </th>
+            <th>
+                Date Modified
+            </th>
+            <th>
+                Company Name
+            </th>
+            <th>
+                <div>
+                    <button type="button" class="btn btn-primary btnadd">
+                        Add
+                    </button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            SR++;
+        <tr>
+            <td>
+                @SR
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created_By)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modified_By)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Modified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company_Details.Name)
+            </td>
+            <td>
+                <button type="button" Id="@item.Customer_Id"
+                        class="btn btn-warning btn-sm btnEdit">
+                    Edit
+                </button>
+                <button type="button" Id="@item.Customer_Id"
+                        class="btn btn-danger btn-sm btndelete">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<td>
-        @Html.DisplayFor(modelItem => item.City)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.State)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Country)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Mobile1)
-    </td>
-
-
-                  @Html.ActionLink("Edit", "Edit", new { id = item.Customer_Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Customer_Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Customer_Id })
-
-
-
-
-
-
-
-
-
-
-
-*@

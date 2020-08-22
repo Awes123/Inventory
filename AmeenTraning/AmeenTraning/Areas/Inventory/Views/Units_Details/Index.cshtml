@@ -51,6 +51,7 @@
                     'success'
                 )
                 LoadProjects();
+                Id = 0;
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
             });
@@ -79,6 +80,7 @@
             $('.formtabl').empty();
             $('.formtabl').append(response);
             $('.btns').addClass('d-none');
+            Id = 0;
         });
     }
     $(document).on('click', '.btndelete', function () {
@@ -95,6 +97,7 @@
             if (result.value) {
                 $.get('/Inventory/Units_Details/Delete?id=' + id, function (response) {
                     LoadProjects();
+                    Id = 0;
                 })
             } else {
                 Swal.fire(

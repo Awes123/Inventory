@@ -57,6 +57,22 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             //var products_Details = db.Products_Details.Include(p => p.Category_Details).Include(p => p.Company_Details);
             return PartialView(db.Customer_Details.ToList());
         }
+
+        public PartialViewResult CreatePartial(int? id)
+        {
+            HttpCookie myCookie = Request.Cookies["inventoryCookie"];
+            string Company_Id = string.Empty;
+            if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
+            {
+                Company_Id = myCookie.Values["Company_Id"].ToString();
+            }
+            Customer_Details customer_ = new Customer_Details();
+            if (id != null)
+            {
+                customer_ = db.Customer_Details.Where(c => c.Customer_Id == id).FirstOrDefault();
+            }
+            return PartialView(customer_);
+        }
         // GET: Inventory/Customer_Details/Details/5
         [Authorize]
         public ActionResult Details(int? id)
@@ -100,7 +116,7 @@ namespace AmeenTraning.Areas.Inventory.Controllers
             return View(customer_Details);
         }
         // Add function 
-        public string Add(string name, string email, string mobile, string address)
+        public string Add(string name, string email, string mobile, string address, int Id)
         {
             string Returns = "";
             if (ModelState.IsValid)
@@ -127,25 +143,46 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                     UserName = myCookie.Values["UserName"].ToString();
                 }
                 int company_Id = Convert.ToInt32(Company_Id);
-   Customer_Details customer = db.Customer_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
+                //Customer_Details customer = db.Customer_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
 
-                if (customer == null)
+               // if (customer == null)
+               if (Id != 0)
                 {
-                    Customer_Details customer_Details = new Customer_Details();
-                    customer_Details.Company_Id = company_Id;
-                    customer_Details.Created_By = UserName;
-                    customer_Details.Date_Created = DateTime.Now;
-                    customer_Details.Name = name;
-                    customer_Details.Email = email;
-                    customer_Details.Mobile = mobile;
-                    customer_Details.Address = address;
-                    db.Customer_Details.Add(customer_Details);
+                    Customer_Details customer = db.Customer_Details.Where(c => c.Customer_Id == Id).FirstOrDefault();
+                    customer.Company_Id = company_Id;
+                    customer.Created_By = UserName;
+                    customer.Date_Created = DateTime.Now;
+                    customer.Name = name;
+                    customer.Email = email;
+                    customer.Mobile = mobile;
+                    customer.Address = address;
+                    //db.Customer_Details.Add(customer);
+                    db.Entry(customer).State = EntityState.Modified;
                     db.SaveChanges();
-                    return "Product Added Successfully";
+                    return "Customer Update Successfully";
                 }
                 else
                 {
-                    return "Product Already Exist";
+                    Customer_Details customer = db.Customer_Details.Where(e => e.Company_Id == company_Id && e.Name == name).FirstOrDefault();
+                    if (customer == null)
+                    {
+                        Customer_Details customer_Details = new Customer_Details();
+                        customer_Details.Company_Id = company_Id;
+                        customer_Details.Created_By = UserName;
+                        customer_Details.Date_Created = DateTime.Now;
+                        customer_Details.Date_Modified = DateTime.Now;
+                        customer_Details.Name = name;
+                        customer_Details.Email = email;
+                        customer_Details.Mobile = mobile;
+                        customer_Details.Address = address;
+                        db.Customer_Details.Add(customer_Details);
+                        db.SaveChanges();
+                        return "Customer Added Successfully";
+                    }
+                    else
+                    {
+                        return "Customer already exist";
+                    }
                 }
             }
             return Returns;
@@ -188,31 +225,14 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         // GET: Inventory/Customer_Details/Delete/5
         [Authorize]
         public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer_Details customer_Details = db.Customer_Details.Find(id);
-            if (customer_Details == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer_Details);
-        }
-
-        // POST: Inventory/Customer_Details/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult DeleteConfirmed(int id)
-        {
+        {          
             Customer_Details customer_Details = db.Customer_Details.Find(id);
             db.Customer_Details.Remove(customer_Details);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
+    
         protected override void Dispose(bool disposing)
         {
             if (disposing)

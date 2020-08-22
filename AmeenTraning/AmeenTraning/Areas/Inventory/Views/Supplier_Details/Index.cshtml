@@ -69,6 +69,7 @@
                         'success'
                     )
                 LoadProjects();
+                Id = 0;
                 $('input[name="Name"]').val('');
                 $('input[name="Email"]').val('');
                 $('input[name="Mobile"]').val('');
@@ -116,6 +117,7 @@
             if (result.value) {
                 $.get('/Inventory/Supplier_Details/Delete?id=' + id, function (response) {
                     LoadProjects();
+                    Id = 0;
                 })
             } else {
                 Swal.fire(

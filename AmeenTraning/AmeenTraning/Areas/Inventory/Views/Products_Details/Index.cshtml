@@ -55,6 +55,7 @@
                     'success'
                 )
                 LoadProjects();
+                Id = 0;
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
                 $('#basicExampleModal').modal('toggle');
@@ -99,6 +100,7 @@
             if (result.value) {
                 $.get('/Inventory/Products_Details/Delete?id=' + id, function (response) {
                     LoadProjects();
+                    Id = 0;
                 })
             } else {
                 Swal.fire(

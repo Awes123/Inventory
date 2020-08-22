@@ -160,7 +160,7 @@ namespace AmeenTraning.Areas.Inventory.Controllers
                 }
                 else
                 {
-                    Supplier_Details supplier = db.Supplier_Details.Where(e => e.Name == UserName && e.Company_Id == company_Id).FirstOrDefault();
+                    Supplier_Details supplier = db.Supplier_Details.Where(e => e.Name == name && e.Company_Id == company_Id).FirstOrDefault();
                     if (supplier == null)
                     {
                         Supplier_Details supplier_Details = new Supplier_Details();

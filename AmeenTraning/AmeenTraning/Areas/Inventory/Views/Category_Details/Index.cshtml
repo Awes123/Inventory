@@ -62,6 +62,7 @@
                     'success'
                 )
                 LoadProjects();
+                Id = 0;
                 $('input[name="Name"]').val('');
                 $('input[name="Description"]').val('');
             });
@@ -87,6 +88,7 @@
             if (result.value) {
                 $.get('/Inventory/Category_Details/Delete?id=' + id, function (response) {
                     LoadProjects();
+                    Id = 0;
                 })
             } else {
                 Swal.fire(
