@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title ="Index";
+}
+
+<link href='~/Bootstrap-5/css/mdb.min.css' rel='stylesheet' />
+
+<!------ Include the above in your HEAD tag ---------->
+<section>
+    <div class='card mt-2'>
+        <div class='card-body'>
+            <div class='formbill'>
+                @Html.Action("CreatePartial", "Purchase_Bill_", new { area = "Inventory" })
+            </div>
+
+        </div>
+        <hr>
+        <section class='btns text-center mb-3'>
+            <button class='btnSubmit btn btn-warning'>Back to list</button>
+            <button class='btnSubmit btn btn-success'>Save</button>
+            <button class='btnCancel btn btn-primary'>Save and Print</button>
+            <label class='text-danger'></label>
+        </section>
+    </div>
+</section>
+<script src='//code.jquery.com/jquery-1.11.1.min.js'></script>
+<script src='~/Scripts/jquery-1.10.2.js'></script>
+<script>
+    $(document).ready(function () {
+        var i = 1;
+        //b = i - 1;
+        //$('#addr' + i).html($('#addr' + b).html()).find('td:first-child').html(i + 1);
+        //$('#tab_logic').append('<tr id='addr' + (i + 1) + ''></tr>');
+        //i++;
+        $('#add_row').click(function () {
+            debugger
+            var number = $('#adrows').val();
+            var sr  = $('#tab_logic >tbody >tr').length;
+            for (var a = 1; a <= number; a++)
+            {
+                sr++;
+                $(".tody").append("<tr><td>" + sr + "</td><td><input type='text' name='product[]' placeholder='' class='form-control'/></td><td><input type='number' name='qty[]' placeholder='' class='form-control qty' step='0' min='0'/></td><td><input type='number' name='price[]' placeholder='' class='form-control price' step='0.00' min='0'/></td><td><input type='text' name='unit[]' placeholder='' class='form-control unit' step='0.00' min='0'/></td><td><input type='number' name='gst[]' placeholder='' class='form-control gst' step='0' min='0' /></td><td><input type='number' name='total[]' placeholder='0.00' class='form-control total' readonly/></td><td><button id='delete_single_row' class='pull-right btn btn-danger'>Delete</button></td></td>");
+            }
+            
+        });
+        $(document).on('click', '#delete_single_row', function () {
+            debugger
+            //if (i > 1) {
+            //    $('#addr' + (i - 1)).html('');
+            //    i--;
+            //}
+            //calc();
+
+            $(this).parent('td').parent('tr').remove();
+
+            });
+
+        $('#tab_logic tbody').on('keyup change', function () {
+            calc();
+        });
+        $('#tax').on('keyup change', function () {
+            calc_total();
+        });
+
+
+    });
+    $('.delete_single_row').click(function () {
+        debugger
+        $(this).parent('tr').empty();
+
+    });
+    function calc() {
+        $('#tab_logic tbody tr').each(function (i, element) {
+            var html = $(this).html();
+            if (html != '') {
+                var qty = $(this).find('.qty').val();
+                var gst = $(this).find('.gst').val();
+                var price = $(this).find('.price').val();
+               // var Gstamount = ((price + gst) / grandtotal) * 100;
+                $(this).find('.total').val(qty * price);
+
+                calc_total();
+            }
+        });
+    }
+
+    function calc_total() {
+        debugger
+        total = 0;
+        $('.total').each(function () {
+            total += parseInt($(this).val());
+        });
+        $('#sub_total').val(total.toFixed(2));
+        var discount = $('#disc').val();
+        tax_sum = total / 100 * $('#tax').val();
+        $('#tax_amount').val(tax_sum.toFixed(2));
+        $('#total_amount').val((tax_sum + total).toFixed(2));
+    }
+
+
+    $('#other_Expenses').keyup(function () {
+        debugger
+        
+        var otherexp = parseInt($(this).val());
+        if (otherexp != 0)
+        {
+            var grandtotal = parseInt($('#total_amount').val());
+            var addition = parseInt(otherexp + grandtotal).toFixed(2);
+            $('#total_amount').val(addition);
+        }
+       
+    });
+    $('#Transport_Charges').keyup(function () {
+        debugger
+        var trancharge = parseInt($(this).val());
+        if (trancharge != 0)
+        {
+            var grandtotal = parseInt($('#total_amount').val());
+            var addition = parseInt(trancharge + grandtotal).toFixed(2);
+            $('#total_amount').val(addition);
+        }
+        
+    });
+    $('#disc').keyup(function () {
+        debugger
+        var disc = $(this).val();
+        if (disc != 0) {
+            var grandtotal = $('#total_amount').val();
+
+            var discount = ((grandtotal - disc) / grandtotal) * 100;
+            var raoundfi = Math.round(discount);
+            $('#total_amount').val(raoundfi);
+        }
+        else
+        {
+            $('#total_amount').val(grandtotal);
+        }
+
+    });
+</script>

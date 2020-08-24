@@ -1,0 +1,153 @@
+﻿<h4 class="card-title">Purchase Bill</h4>
+<div class="col-md-4 float-right mb-3 mt-2">
+    <button type="button" class="btn btn-warning" disabled>
+        Bill No: 786
+    </button>
+    <button type="button" class="btn btn-primary" disabled>
+        Date: 23-08-2020
+    </button>
+</div>
+<div class="row">
+    <div class="col-md-5 mb-3 mt-2">
+
+        <div class="input-group">
+
+            <select class="form-control">
+                <option selected disabled>Select Supplier</option>
+                @foreach (AmeenTraning.Models.Supplier_Details supplier in ViewBag.Supplier)
+                {
+                    <option>@supplier.Name</option>
+                }
+
+            </select>
+            <div class="input-group-prepend">
+                @*<i class="fa fa-user-plus"></i>*@
+                <span class="input-group-text btn btn-info ml-1" title="Add New Supplier">+</span>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<hr>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover" id="tab_logic">
+            <thead>
+                <tr>
+                    <th class="text-center"> Sr</th>
+                    <th class="text-center"> Product </th>
+                    <th class="text-center"> Qty </th>
+                    <th class="text-center"> Price </th>
+                    <th class="text-center"> Unit </th>
+                    <th class="text-center"> GST </th>
+                    <th class="text-center"> Total </th>
+                    <th class="text-center">  </th>
+                </tr>
+            </thead>
+            <tbody class="tody">
+                <tr id='addr0'>
+                    <td>1</td>
+                    <td><input type="text" name='product[]' placeholder='' class="form-control" /></td>
+                    <td><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" /></td>
+                    <td><input type="number" name='price[]' placeholder='' class="form-control price" step="0.00" min="0" /></td>
+                    <td><input type="text" name='unit[]' placeholder='' class="form-control unit" step="0.00" min="0" /></td>
+                    <td><input type="number" name='gst[]' placeholder='' class="form-control gst" step="0" min="0" /></td>
+                    <td><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
+                    <td><button id='delete_single_row' class="pull-right btn btn-danger">Delete</button></td>
+                </tr>
+                @*<tr id='addr1'></tr>*@
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row clearfix">
+    <div class="col-md-4">
+        <div class="input-group">
+
+            <input type="text" class="form-control" id="adrows" placeholder="Enter Number of rows" required="">
+            <div class="input-group-prepend">
+                <button id="add_row" class="btn input-group-text btn-success pull-left">Add Row(s)</button>
+            </div>
+        </div>
+       
+        @*<button id='delete_row' class="pull-right btn btn-danger">Delete Row</button>*@
+    </div>
+</div>
+<hr>
+<div class="row clearfix float-right" style="margin-top:20px">
+    <div class="col-lg-2">
+        <label for="exampleFormControlTextarea1">Comment:</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+    </div>
+    <div class="pull-left col-md-4">
+        <table class="table table-responsive table-bordered table-hover" id="tab_logic_total">
+            <tbody>
+                <tr>
+                    <th class="text-center">Other Expenses</th>
+                    <td class="text-center"><input type="number" name='othexp' placeholder='0.00' class="form-control" id="other_Expenses" /></td>
+                </tr>
+                <tr>
+                    <th class="text-center">Transport Charge</th>
+                    <td class="text-center"><input type="number" name='trancharge' placeholder='0.00' class="form-control" id="Transport_Charges" /></td>
+                </tr>
+                <tr>
+                    <th class="text-center">Discount</th>
+                    <td class="text-center">
+                        <div class="input-group mb-2 mb-sm-0">
+                            <input type="number" class="form-control" id="disc" placeholder="0">
+                            <div class="input-group-text">%</div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th class="text-center">Payment</th>
+                    <td class="text-center">
+                        <div class="d-flex ">
+                            <div class="custom-control custom-radio ml-3">
+                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                                <label class="custom-control-label" for="credit">Cash</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-4">
+                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                <label class="custom-control-label" for="paypal">Credit</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pull-right col-md-6">
+        <table class="table table-bordered table-hover" id="tab_logic_total">
+            <tbody>
+                <tr>
+                    <th class="text-center">Sub Total</th>
+                    <td class="text-center"><input type="number" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" readonly /></td>
+                </tr>
+                <tr>
+                    <th class="text-center">GST</th>
+                    <td class="text-center">
+                        <div class="input-group mb-2 mb-sm-0">
+                            <input type="number" class="form-control" id="tax" placeholder="0">
+                            <div class="input-group-text">%</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-center">GST Amount</th>
+                    <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" readonly /></td>
+                </tr>
+                <tr>
+                    <th class="text-center">Grand Total</th>
+                    <td class="text-center"><input type="number" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" readonly /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
