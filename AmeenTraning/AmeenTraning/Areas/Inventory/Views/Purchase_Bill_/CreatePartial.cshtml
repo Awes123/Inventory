@@ -4,11 +4,11 @@
         Bill No: 786
     </button>
     <button type="button" class="btn btn-primary" disabled>
-        Date: 23-08-2020
+        Date: @ViewBag.Date
     </button>
 </div>
 <div class="row">
-    <div class="col-md-5 mb-3 mt-2">
+    <div class="col-md-8 mb-3 mt-2">
 
         <div class="input-group">
 
@@ -47,14 +47,23 @@
             </thead>
             <tbody class="tody">
                 <tr id='addr0'>
-                    <td>1</td>
-                    <td><input type="text" name='product[]' placeholder='' class="form-control" /></td>
-                    <td><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" /></td>
-                    <td><input type="number" name='price[]' placeholder='' class="form-control price" step="0.00" min="0" /></td>
-                    <td><input type="text" name='unit[]' placeholder='' class="form-control unit" step="0.00" min="0" /></td>
-                    <td><input type="number" name='gst[]' placeholder='' class="form-control gst" step="0" min="0" /></td>
-                    <td><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
-                    <td><button id='delete_single_row' class="pull-right btn btn-danger">Delete</button></td>
+                    <td class="col-md-1">1</td>
+                    <td class="col-md-5">
+                        <select class="form-control" name='product[]'>
+                            <option selected disabled>Select Product</option>
+                            @foreach (AmeenTraning.Models.Products_Details product in ViewBag.Products)
+                            {
+                                <option>@product.Name</option>
+                            }
+                        </select>
+                            @*<input type="text" name='product[]' placeholder='' class="form-control" />*@
+                    </td>
+                    <td class="col-md-1"><input type="number" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" /></td>
+                    <td class="col-md-1"><input type="number" name='price[]' placeholder='' class="form-control price" step="0.00" min="0" /></td>
+                    <td class="col-md-1"><input type="text" name='unit[]' placeholder='' class="form-control unit" step="0.00" min="0" /></td>
+                    <td class="col-md-1"><input type="number" name='gst[]' placeholder='' class="form-control gst" step="0" min="0" /></td>
+                    <td class="col-md-1"><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
+                    <td class="col-md-1"><button id='delete_single_row' class="pull-right btn btn-danger">Delete</button></td>
                 </tr>
                 @*<tr id='addr1'></tr>*@
             </tbody>

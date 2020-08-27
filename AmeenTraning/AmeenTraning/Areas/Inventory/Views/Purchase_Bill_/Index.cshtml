@@ -16,7 +16,8 @@
         </div>
         <hr>
         <section class='btns text-center mb-3'>
-            <button class='btnSubmit btn btn-warning'>Back to list</button>
+            @*<button class='btnSubmit btn btn-warning'>Back to list</button>*@
+            <a href="/Inventory/Purchase_Bill_/Index"  class='btnSubmit btn btn-warning'>Back to list</a>
             <button class='btnSubmit btn btn-success'>Save</button>
             <button class='btnCancel btn btn-primary'>Save and Print</button>
             <label class='text-danger'></label>
@@ -35,16 +36,17 @@
         $('#add_row').click(function () {
             debugger
             var number = $('#adrows').val();
-            var sr  = $('#tab_logic >tbody >tr').length;
-            for (var a = 1; a <= number; a++)
-            {
+            var sr = $('#tab_logic >tbody >tr').length;
+            for (var a = 1; a <= number; a++) {
+
+
                 sr++;
-                $(".tody").append("<tr><td>" + sr + "</td><td><input type='text' name='product[]' placeholder='' class='form-control'/></td><td><input type='number' name='qty[]' placeholder='' class='form-control qty' step='0' min='0'/></td><td><input type='number' name='price[]' placeholder='' class='form-control price' step='0.00' min='0'/></td><td><input type='text' name='unit[]' placeholder='' class='form-control unit' step='0.00' min='0'/></td><td><input type='number' name='gst[]' placeholder='' class='form-control gst' step='0' min='0' /></td><td><input type='number' name='total[]' placeholder='0.00' class='form-control total' readonly/></td><td><button id='delete_single_row' class='pull-right btn btn-danger'>Delete</button></td></td>");
+                $(".tody").append("<tr><td>" + sr + "</td><td><select class='form-control' name='product[]'><option selected disabled>Select Supplier</option><option>Laptop</option><option>Samsung J+</option><option>Lenovo</option></select></td><td><input type='number' name='qty[]' placeholder='' class='form-control qty' step='0' min='0'/></td><td><input type='number' name='price[]' placeholder='' class='form-control price' step='0.00' min='0'/></td><td><input type='text' name='unit[]' placeholder='' class='form-control unit' step='0.00' min='0'/></td><td><input type='number' name='gst[]' placeholder='' class='form-control gst' step='0' min='0' /></td><td><input type='number' name='total[]' placeholder='0.00' class='form-control total' readonly/></td><td><button id='delete_single_row' class='pull-right btn btn-danger'>Delete</button></td></td>");
             }
-            
+
         });
         $(document).on('click', '#delete_single_row', function () {
-            debugger
+
             //if (i > 1) {
             //    $('#addr' + (i - 1)).html('');
             //    i--;
@@ -52,8 +54,8 @@
             //calc();
 
             $(this).parent('td').parent('tr').remove();
-
-            });
+            calc_total();
+        });
 
         $('#tab_logic tbody').on('keyup change', function () {
             calc();
@@ -65,7 +67,7 @@
 
     });
     $('.delete_single_row').click(function () {
-        debugger
+
         $(this).parent('tr').empty();
 
     });
@@ -76,16 +78,17 @@
                 var qty = $(this).find('.qty').val();
                 var gst = $(this).find('.gst').val();
                 var price = $(this).find('.price').val();
-               // var Gstamount = ((price + gst) / grandtotal) * 100;
-                $(this).find('.total').val(qty * price);
-
+                var total = qty * price;
+                // var Gstamount = ((price + gst) / grandtotal) * 100;
+                $(this).find('.total').val((total / 100 * gst) + total);
                 calc_total();
+                // test();
             }
         });
     }
 
     function calc_total() {
-        debugger
+
         total = 0;
         $('.total').each(function () {
             total += parseInt($(this).val());
@@ -95,32 +98,85 @@
         tax_sum = total / 100 * $('#tax').val();
         $('#tax_amount').val(tax_sum.toFixed(2));
         $('#total_amount').val((tax_sum + total).toFixed(2));
+
+        var grnTotal = 0;
+        $(".gst").each(function () {
+            var gst = parseFloat($(this).val());
+            grnTotal += isNaN(gst) ? 0 : gst;
+        });
+        $('#tax').val(grnTotal.toFixed(2));
+
     }
 
+    //------------test
+    //function test() {
+    //    $('#other_Expenses').keyup(function () {
+    //        debugger;
+    //        calc_total();
+    //        var grant_total = parseInt($('#total_amount').val());
+    //        var other_Expense = parseInt($('#other_Expenses').val());
+    //        if (isNaN(other_Expense)) {
+    //            calc_total();
+    //        }
+    //        else {
+    //            var addition = parseInt(grant_total + other_Expense);
+    //            $('#total_amount').val(addition);
+    //        }
 
-    $('#other_Expenses').keyup(function () {
+    //    });
+    //}
+    //function Tod() {
+    //    debugger
+    //    calc_total();
+    //    var grant_total = parseInt($('#total_amount').val());
+    //    var other_Expense = parseInt($('#other_Expenses').val());
+    //    var tranport_Charges = parseInt($('#Transport_Charges').val());
+    //    if (isNaN(other_Expense) || isNaN(tranport_Charges)) {
+    //        calc_total();
+    //    }
+    //    else {
+    //        var addition = parseInt(grant_total + other_Expense + tranport_Charges);
+    //        $('#total_amount').val(addition);
+    //    }
+    //}
+    $(document).keyup(function () {
+
         debugger
-        
-        var otherexp = parseInt($(this).val());
-        if (otherexp != 0)
-        {
-            var grandtotal = parseInt($('#total_amount').val());
-            var addition = parseInt(otherexp + grandtotal).toFixed(2);
+        var grant_total = parseInt($('#total_amount').val());
+        var tranport_Charges = parseInt($('#Transport_Charges').val());
+        if (isNaN(tranport_Charges)) {
+            calc_total();
+            oth();
+        }
+        else {
+            var add = parseInt(grant_total + tranport_Charges);
+            $('#total_amount').val(add);
+
+        }
+    });
+
+
+
+    $(document).keyup(function () {
+
+        var grant_total = parseInt($('#total_amount').val());
+        var other_Expense = parseInt($('#other_Expenses').val());
+        if (isNaN(other_Expense)) {
+            calc_total();
+        }
+        else {
+            var addition = parseInt(grant_total + other_Expense);
             $('#total_amount').val(addition);
         }
-       
     });
-    $('#Transport_Charges').keyup(function () {
-        debugger
-        var trancharge = parseInt($(this).val());
-        if (trancharge != 0)
-        {
-            var grandtotal = parseInt($('#total_amount').val());
-            var addition = parseInt(trancharge + grandtotal).toFixed(2);
-            $('#total_amount').val(addition);
-        }
-        
-    });
+
+    //$('#Transport_Charges').keyup(function () {
+    //    debugger;
+
+
+    //});
+
+
     $('#disc').keyup(function () {
         debugger
         var disc = $(this).val();
@@ -131,10 +187,12 @@
             var raoundfi = Math.round(discount);
             $('#total_amount').val(raoundfi);
         }
-        else
-        {
+        else {
             $('#total_amount').val(grandtotal);
         }
 
     });
+
+
+
 </script>

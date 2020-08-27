@@ -25,14 +25,17 @@ namespace AmeenTraning.Areas.Inventory.Controllers
         }
         public PartialViewResult CreatePartial()
         {
-            string Company_Id = string.Empty;
+            
+            string Company_Id = string.Empty; 
             HttpCookie myCookie = Request.Cookies["inventoryCookie"];
             if (!string.IsNullOrEmpty(myCookie.Values["Company_Id"]))
             {
                 Company_Id = myCookie.Values["Company_Id"].ToString();
             }
-            var compid = Convert.ToInt32(Company_Id);
+			var compid = Convert.ToInt32(Company_Id);
+            ViewBag.Date = DateTime.Now.ToString("MM/dd/yyyy");
             ViewBag.Supplier = db.Supplier_Details.Where(e => e.Company_Id == compid).ToList();
+            ViewBag.Products = db.Products_Details.Where(e => e.Company_Id == compid).ToList();
             return PartialView();
         }
     }
