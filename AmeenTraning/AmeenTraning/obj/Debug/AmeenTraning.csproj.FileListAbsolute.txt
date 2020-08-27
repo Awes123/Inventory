@@ -212,8 +212,8 @@ C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\A
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\bin\System.Web.Helpers.xml
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\bin\System.Web.Mvc.xml
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.csprojAssemblyReference.cache
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.csproj.CoreCompileInputs.cache
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.csproj.CopyComplete
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.dll
 C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.pdb
-C:\Users\The Stencil - Dev 2\source\repos\Inventory\Inventory_app\AmeenTraning\AmeenTraning\obj\Debug\AmeenTraning.csprojAssemblyReference.cache
