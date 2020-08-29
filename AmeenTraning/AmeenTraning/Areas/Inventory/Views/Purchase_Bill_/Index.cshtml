@@ -71,6 +71,7 @@
         $(this).parent('tr').empty();
 
     });
+   
     function calc() {
         $('#tab_logic tbody tr').each(function (i, element) {
             var html = $(this).html();
@@ -79,6 +80,7 @@
                 var gst = $(this).find('.gst').val();
                 var price = $(this).find('.price').val();
                 var total = qty * price;
+                $(this).attr('id', total )
                 $(this).find('.total').val((total / 100 * gst) + total);
             }
         });
@@ -91,15 +93,16 @@
         $('.total').each(function () {
             total += parseInt($(this).val());
         });
-        //price = 0;
-        //$('.price').each(function () {
-        //    price += parseInt($(this).val());
-        //});
+        var price = 0;
+        $('#tab_logic tbody tr').each(function () {
+            price += parseInt($(this).attr('id'));
+        });
         eachgst()
-        $('#sub_total').val(total.toFixed(2));
-        tax_sum = total / 100 * $('#tax').val();
+        $('#sub_total').val(price.toFixed(2));
+        var subtotal = parseInt($('#sub_total').val());
+        tax_sum = subtotal / 100 * $('#tax').val();
         $('#tax_amount').val(tax_sum.toFixed(2));
-        $('#total_amount').val((tax_sum + total).toFixed(2));
+        $('#total_amount').val(subtotal + tax_sum);
         
     }
 
@@ -128,20 +131,7 @@
     //    }
 
     //});
-    function Tod() {
-        debugger
-        calc_total();
-        var grant_total = parseInt($('#total_amount').val());
-        var other_Expense = parseInt($('#other_Expenses').val());
-        var tranport_Charges = parseInt($('#Transport_Charges').val());
-        if (isNaN(other_Expense) || isNaN(tranport_Charges)) {
-            calc_total();
-        }
-        else {
-            var addition = parseInt(grant_total + other_Expense + tranport_Charges);
-            $('#total_amount').val(addition);
-        }
-    }
+   
     
 
     //$('#Transport_Charges').keyup(function () {
