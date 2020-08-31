@@ -119,5 +119,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Purchase_Bill">
+      <EntityTypeMapping TypeName="TrainingModel.Purchase_Bill">
+        <MappingFragment StoreEntitySet="Purchase_Bill">
+          <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+          <ScalarProperty Name="Payment_Mode" ColumnName="Payment_Mode" />
+          <ScalarProperty Name="Other_Expenses" ColumnName="Other_Expenses" />
+          <ScalarProperty Name="Transport_Charges" ColumnName="Transport_Charges" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Total_Amount" ColumnName="Total_Amount" />
+          <ScalarProperty Name="GST_Amount" ColumnName="GST_Amount" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Supplier_ID" ColumnName="Supplier_ID" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Bill_No" ColumnName="Bill_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Purchase_Bill_Item">
+      <EntityTypeMapping TypeName="TrainingModel.Purchase_Bill_Item">
+        <MappingFragment StoreEntitySet="Purchase_Bill_Item">
+          <ScalarProperty Name="Lots_Group" ColumnName="Lots_Group" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Product_id" ColumnName="Product_id" />
+          <ScalarProperty Name="Purchase_Bill_ID" ColumnName="Purchase_Bill_ID" />
+          <ScalarProperty Name="Purchase_item_ID" ColumnName="Purchase_item_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -32,5 +32,7 @@ namespace AmeenTraning.Models
         public virtual DbSet<Products_Details> Products_Details { get; set; }
         public virtual DbSet<Supplier_Details> Supplier_Details { get; set; }
         public virtual DbSet<Units_Details> Units_Details { get; set; }
+        public virtual DbSet<Purchase_Bill> Purchase_Bill { get; set; }
+        public virtual DbSet<Purchase_Bill_Item> Purchase_Bill_Item { get; set; }
     }
 }

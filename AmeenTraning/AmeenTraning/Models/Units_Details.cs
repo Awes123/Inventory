@@ -18,7 +18,7 @@ namespace AmeenTraning.Models
         public Nullable<int> Company_Id { get; set; }
         public string Name { get; set; }
         public Nullable<System.DateTime> Date_Created { get; set; }
-        public Nullable<System.DateTime> Date_Modified { get; set; }
+        public System.DateTime Date_Modified { get; set; }
         public string Created_By { get; set; }
         public string Modified_By { get; set; }
     

@@ -12,11 +12,11 @@
 
         <div class="input-group">
 
-            <select class="form-control">
+            <select class="form-control supplier">
                 <option selected disabled>Select Supplier</option>
                 @foreach (AmeenTraning.Models.Supplier_Details supplier in ViewBag.Supplier)
                 {
-                    <option>@supplier.Name</option>
+                    <option id="@supplier.Supplier_Id">@supplier.Name</option>
                 }
 
             </select>
@@ -106,11 +106,11 @@
                     <td class="text-center">
                         <div class="d-flex ">
                             <div class="custom-control custom-radio ml-3">
-                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                                <input id="Cash" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
                                 <label class="custom-control-label" for="credit">Cash</label>
                             </div>
                             <div class="custom-control custom-radio ml-4">
-                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                <input id="Credit" name="paymentMethod" type="radio" class="custom-control-input" required="">
                                 <label class="custom-control-label" for="paypal">Credit</label>
                             </div>
                         </div>

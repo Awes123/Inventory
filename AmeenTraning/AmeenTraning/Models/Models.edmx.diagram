@@ -19,6 +19,10 @@
         <AssociationConnector Association="TrainingModel.FK_Supplier_Details_Company_Details" />
         <AssociationConnector Association="TrainingModel.FK_UserDetails_Company_Details" />
         <AssociationConnector Association="TrainingModel.FK_Units_Details_Company_Details" />
+        <EntityTypeShape EntityType="TrainingModel.Purchase_Bill" Width="1.5" PointX="5.25" PointY="10.625" />
+        <EntityTypeShape EntityType="TrainingModel.Purchase_Bill_Item" Width="1.5" PointX="7.5" PointY="6.25" />
+        <AssociationConnector Association="TrainingModel.FK_Purchase_Bill_Item_Products_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Purchase_Bill_Supplier_Details" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

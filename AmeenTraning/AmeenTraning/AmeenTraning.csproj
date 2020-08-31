@@ -369,6 +369,7 @@
     <Content Include="Areas\Inventory\Views\Customer_Details\CreatePartial.cshtml" />
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\CreatePartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Purchase_Bill_\IndexPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -421,6 +422,12 @@
       <DependentUpon>Models.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Products_Details.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Purchase_Bill.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Purchase_Bill_Item.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier_Details.cs">

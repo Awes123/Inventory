@@ -14,6 +14,12 @@ namespace AmeenTraning.Models
     
     public partial class Supplier_Details
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Supplier_Details()
+        {
+            this.Purchase_Bill = new HashSet<Purchase_Bill>();
+        }
+    
         public int Supplier_Id { get; set; }
         public Nullable<int> Company_Id { get; set; }
         public string Name { get; set; }
@@ -30,5 +36,7 @@ namespace AmeenTraning.Models
         public Nullable<System.DateTime> Date_Modified { get; set; }
     
         public virtual Company_Details Company_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Purchase_Bill> Purchase_Bill { get; set; }
     }
 }

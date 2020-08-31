@@ -54,6 +54,16 @@
       <End Role="Company_Details" EntitySet="Company_Details" />
       <End Role="Units_Details" EntitySet="Units_Details" />
     </AssociationSet>
+    <EntitySet Name="Purchase_Bill" EntityType="TrainingModel.Purchase_Bill" />
+    <EntitySet Name="Purchase_Bill_Item" EntityType="TrainingModel.Purchase_Bill_Item" />
+    <AssociationSet Name="FK_Purchase_Bill_Item_Products_Details" Association="TrainingModel.FK_Purchase_Bill_Item_Products_Details">
+      <End Role="Products_Details" EntitySet="Products_Details" />
+      <End Role="Purchase_Bill_Item" EntitySet="Purchase_Bill_Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Purchase_Bill_Supplier_Details" Association="TrainingModel.FK_Purchase_Bill_Supplier_Details">
+      <End Role="Supplier_Details" EntitySet="Supplier_Details" />
+      <End Role="Purchase_Bill" EntitySet="Purchase_Bill" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Category_Details">
     <Key>
@@ -128,6 +138,7 @@
     <Property Name="Date_Modified" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Category_Details" Relationship="TrainingModel.FK_Products_Details_Category_Details" FromRole="Products_Details" ToRole="Category_Details" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Products_Details_Company_Details" FromRole="Products_Details" ToRole="Company_Details" />
+    <NavigationProperty Name="Purchase_Bill_Item" Relationship="TrainingModel.FK_Purchase_Bill_Item_Products_Details" FromRole="Products_Details" ToRole="Purchase_Bill_Item" />
   </EntityType>
   <EntityType Name="Supplier_Details">
     <Key>
@@ -148,6 +159,7 @@
     <Property Name="Date_Created" Type="DateTime" Precision="3" />
     <Property Name="Date_Modified" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Supplier_Details_Company_Details" FromRole="Supplier_Details" ToRole="Company_Details" />
+    <NavigationProperty Name="Purchase_Bill" Relationship="TrainingModel.FK_Purchase_Bill_Supplier_Details" FromRole="Supplier_Details" ToRole="Purchase_Bill" />
   </EntityType>
   <EntityType Name="Units_Details">
     <Key>
@@ -157,7 +169,7 @@
     <Property Name="Company_Id" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Date_Created" Type="DateTime" Precision="3" />
-    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" Nullable="false" />
     <Property Name="Created_By" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Modified_By" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Units_Details_Company_Details" FromRole="Units_Details" ToRole="Company_Details" />
@@ -243,6 +255,64 @@
       </Principal>
       <Dependent Role="Units_Details">
         <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Purchase_Bill">
+    <Key>
+      <PropertyRef Name="Bill_No" />
+    </Key>
+    <Property Name="Bill_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date_Created" Type="DateTime" Precision="3" />
+    <Property Name="Supplier_ID" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GST_Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Total_Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Transport_Charges" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Other_Expenses" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Payment_Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Supplier_Details" Relationship="TrainingModel.FK_Purchase_Bill_Supplier_Details" FromRole="Purchase_Bill" ToRole="Supplier_Details" />
+    <Property Name="Company_Id" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Purchase_Bill_Item">
+    <Key>
+      <PropertyRef Name="Purchase_item_ID" />
+    </Key>
+    <Property Name="Purchase_item_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Purchase_Bill_ID" Type="Int32" />
+    <Property Name="Product_id" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Lots_Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products_Details" Relationship="TrainingModel.FK_Purchase_Bill_Item_Products_Details" FromRole="Purchase_Bill_Item" ToRole="Products_Details" />
+  </EntityType>
+  <Association Name="FK_Purchase_Bill_Item_Products_Details">
+    <End Type="TrainingModel.Products_Details" Role="Products_Details" Multiplicity="0..1" />
+    <End Type="TrainingModel.Purchase_Bill_Item" Role="Purchase_Bill_Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products_Details">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="Purchase_Bill_Item">
+        <PropertyRef Name="Product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Purchase_Bill_Supplier_Details">
+    <End Type="TrainingModel.Supplier_Details" Role="Supplier_Details" Multiplicity="0..1" />
+    <End Type="TrainingModel.Purchase_Bill" Role="Purchase_Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier_Details">
+        <PropertyRef Name="Supplier_Id" />
+      </Principal>
+      <Dependent Role="Purchase_Bill">
+        <PropertyRef Name="Supplier_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
