@@ -370,6 +370,8 @@
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\CreatePartial.cshtml" />
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\IndexPartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Purchase_Bill_\Edit.cshtml" />
+    <Content Include="Areas\Inventory\Views\Sales_Bill\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -390,6 +392,7 @@
     <Compile Include="Areas\Inventory\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Inventory\Controllers\Products_DetailsController.cs" />
     <Compile Include="Areas\Inventory\Controllers\Purchase_Bill_Controller.cs" />
+    <Compile Include="Areas\Inventory\Controllers\Sales_BillController.cs" />
     <Compile Include="Areas\Inventory\Controllers\Supplier_DetailsController.cs" />
     <Compile Include="Areas\Inventory\Controllers\Units_DetailsController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />

@@ -1,8 +1,8 @@
 ﻿
-<h4 class="card-title">Purchase Bill</h4>
+<h4 class="card-title">Purchase Bill Edit</h4>
 <div class="col-md-4 float-right mb-3 mt-2">
     <button type="button" class="btn btn-warning" disabled>
-        Bill No: 786
+        Bill No: @ViewBag.Billno
     </button>
     <button type="button" class="btn btn-primary" disabled>
         Date: @ViewBag.Date
@@ -15,7 +15,15 @@
                 <option selected disabled>Select Supplier</option>
                 @foreach (AmeenTraning.Models.Supplier_Details supplier in ViewBag.Supplier)
                 {
-                    <option id="@supplier.Supplier_Id">@supplier.Name</option>
+                    if (supplier.Name == ViewBag.selctedsup)
+                    {
+                        <option id="@supplier.Supplier_Id" selected>@supplier.Name</option>
+                    }
+                    else
+                    {
+                        <option id="@supplier.Supplier_Id">@supplier.Name</option>
+                    }
+
                 }
             </select>
             <div class="input-group-prepend">
@@ -47,11 +55,11 @@
                     <td class="col-md-1">1</td>
                     <td class="col-md-5">
                         <select class="form-control product" name='product[]'>
-                            <option selected disabled>Select Product</option>
+                            @*<option selected disabled>Select Product</option>
                             @foreach (AmeenTraning.Models.Products_Details product in ViewBag.Products)
                             {
                                 <option id="@product.Product_Id">@product.Name</option>
-                            }
+                            }*@
                         </select>
                         @*<input type="text" name='product[]' placeholder='' class="form-control" />*@
                     </td>
@@ -152,4 +160,5 @@
         </table>
     </div>
 </div>
+
 
