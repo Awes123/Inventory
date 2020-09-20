@@ -372,6 +372,9 @@
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\IndexPartial.cshtml" />
     <Content Include="Areas\Inventory\Views\Purchase_Bill_\Edit.cshtml" />
     <Content Include="Areas\Inventory\Views\Sales_Bill\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\Sales_Bill\CreatePartial.cshtml" />
+    <Content Include="Areas\Inventory\Views\Sales_Bill\Edit.cshtml" />
+    <Content Include="Areas\Inventory\Views\Sales_Bill\IndexPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -431,6 +434,15 @@
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Purchase_Bill_Item.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sales_Bill.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sales_Bill_item.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Stock_Details.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier_Details.cs">

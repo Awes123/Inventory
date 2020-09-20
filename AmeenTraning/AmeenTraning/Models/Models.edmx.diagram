@@ -23,6 +23,13 @@
         <EntityTypeShape EntityType="TrainingModel.Purchase_Bill_Item" Width="1.5" PointX="7.5" PointY="6.25" />
         <AssociationConnector Association="TrainingModel.FK_Purchase_Bill_Item_Products_Details" />
         <AssociationConnector Association="TrainingModel.FK_Purchase_Bill_Supplier_Details" />
+        <EntityTypeShape EntityType="TrainingModel.Sales_Bill" Width="1.5" PointX="5.25" PointY="16.25" />
+        <EntityTypeShape EntityType="TrainingModel.Sales_Bill_item" Width="1.5" PointX="7.5" PointY="11" />
+        <EntityTypeShape EntityType="TrainingModel.Stock_Details" Width="1.5" PointX="7.5" PointY="16.625" />
+        <AssociationConnector Association="TrainingModel.FK_Sales_Bill_Customer_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Sales_Bill_item_ID_Products_Details" />
+        <AssociationConnector Association="TrainingModel.FK_Stock_Details_Sales_Bill" />
+        <AssociationConnector Association="TrainingModel.FK_Stock_Details_Stock_Details" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

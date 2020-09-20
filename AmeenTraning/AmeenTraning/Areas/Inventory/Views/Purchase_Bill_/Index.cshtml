@@ -41,8 +41,6 @@
             var number = $('#adrows').val();
             var sr = $('#tab_logic >tbody >tr').length;
             for (var a = 1; a <= number; a++) {
-
-
                 sr++;
                 $(".tody").append("<tr><td>" + sr + "</td><td><select class='form-control product' name='product[]'><option selected disabled>Select Product</option>@foreach (AmeenTraning.Models.Products_Details product in ViewBag.Products){<option id='@product.Product_Id'>@product.Name</option>}</select></td><td><input type='number' name='qty[]' placeholder='' class='form-control qty' step='0' min='0'/></td><td><input type='number' name='price[]' placeholder='' class='form-control price' step='0.00' min='0'/></td><td><input type='text' name='unit[]' placeholder='' class='form-control unit' step='0.00' min='0'/></td><td><input type='number' name='gst[]' placeholder='' class='form-control gst' step='0' min='0' /></td><td><input type='number' name='total[]' placeholder='0.00' class='form-control total' readonly/></td><td><button id='delete_single_row' class='pull-right btn btn-danger'>Delete</button></td></td>");
             }
@@ -197,23 +195,24 @@
         var Comment = $('#exampleFormControlTextarea1').val();
         var PaymentMode = $("input[name='paymentMethod']:checked").val();
         
-        $.post('/Inventory/Purchase_Bill_/Add', { GST, GSTamount, Discount, GrandTotal, Supplier_ID, Quantity, Transport_Charge, OtherExpences, Comment, PaymentMode },
+        $.post('/Inventory/Purchase_Bill_/Add', { GST, GSTamount, Discount, GrandTotal, Supplier_ID, Quantity, Transport_Charge, OtherExpences, Comment, PaymentMode, Subtotal, Id},
             function (data, status) {
                 
                 if (data != 0)
                 {
+                    Id = 0;
                     $('#tab_logic tbody tr').each(function (i, element) {
                         debugger
                         var qty = $(this).find('.qty').val();
                         var gst = $(this).find('.gst').val();
                         var price = $(this).find('.price').val();
                         var prodocut_Id = $(".product option:selected").attr('id');
-                        var discount = "5";
+                        var discount = $('#disc').val();
                         var unit = $(this).find('.unit').val();
                         var amount = $(this).find('.total').val();
                         var bill_No = data;
-
-                        $.post('/Inventory/Purchase_Bill_/Add_Item', { qty, gst, price, prodocut_Id, discount, unit, amount, bill_No},
+                        var itemid = $(this).find('.itemid').attr('id');
+                        $.post('/Inventory/Purchase_Bill_/Add_Item', { qty, gst, price, prodocut_Id, discount, unit, amount, bill_No, itemid},
                             function (data, status) {
                               
                             });
@@ -269,6 +268,7 @@
     $(document).on('click', '.btnEdit', function () {
         debugger
         var id = $(this).attr('Id');
+        Id = id;
         $.get('/Inventory/Purchase_Bill_/Edit?id=' + id, function (response) {
             $('.formbill').empty();
             $('.formbill').append(response);

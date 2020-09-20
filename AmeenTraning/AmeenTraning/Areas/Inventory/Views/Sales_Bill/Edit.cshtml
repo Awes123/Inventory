@@ -1,5 +1,4 @@
-﻿
-<h4 class="card-title">Purchase Bill Edit</h4>
+﻿<h4 class="card-title">Sales Bill Edit</h4>
 <div class="col-md-4 float-right mb-3 mt-2">
     <button type="button" class="btn btn-warning" disabled>
         Bill No: @ViewBag.Billno
@@ -12,18 +11,17 @@
     <div class="col-md-8 mb-3 mt-2">
         <div class="input-group">
             <select class="form-control supplier">
-                <option selected disabled>Select Supplier</option>
-                @foreach (AmeenTraning.Models.Supplier_Details supplier in ViewBag.Supplier)
+                <option selected disabled>Select Customer</option>
+                @foreach (AmeenTraning.Models.Customer_Details customer in ViewBag.Customers)
                 {
-                    if (supplier.Name == ViewBag.selctedsup)
+                    if (customer.Name == ViewBag.selctedCustomer)
                     {
-                        <option id="@supplier.Supplier_Id" selected>@supplier.Name</option>
+                        <option id="@customer.Customer_Id" selected>@customer.Name</option>
                     }
                     else
                     {
-                        <option id="@supplier.Supplier_Id">@supplier.Name</option>
+                        <option id="@customer.Customer_Id">@customer.Name</option>
                     }
-
                 }
             </select>
             <div class="input-group-prepend">
@@ -31,7 +29,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <hr>
 <div class="row clearfix">
@@ -50,17 +47,18 @@
                 </tr>
             </thead>
             <tbody class="tody">
-                @foreach (AmeenTraning.Models.Purchase_Bill_Item purchase_Bill_Item in ViewBag.PurchaseBillItem)
+                @foreach (AmeenTraning.Models.Sales_Bill_item sales_Bill_Item in ViewBag.SalesBillItem)
                 {
-                    var selectedProduct = purchase_Bill_Item.Products_Details.Name;
+
+                    var slctproduct = sales_Bill_Item.Products_Details.Name;
                     <tr id='addr0'>
-                        <td class="col-md-1 itemid" id="@purchase_Bill_Item.Purchase_item_ID">1</td>
+                        <td class="col-md-1 itemid" id="@sales_Bill_Item.Sales_Bill_item_ID">1</td>
                         <td class="col-md-5">
                             <select class="form-control product" name='product[]'>
                                 <option selected disabled>Select Product</option>
                                 @foreach (AmeenTraning.Models.Products_Details product in ViewBag.Products)
                                 {
-                                    if (selectedProduct == product.Name)
+                                    if (slctproduct == product.Name)
                                     {
                                         <option id="@product.Product_Id" selected>@product.Name</option>
                                     }
@@ -72,11 +70,11 @@
                             </select>
                             @*<input type="text" name='product[]' placeholder='' class="form-control" />*@
                         </td>
-                        <td class="col-md-1"><input type="number" name='qty[]' value="@purchase_Bill_Item.Quantity" placeholder='' class="form-control qty" step="0" min="0" /></td>
-                        <td class="col-md-1"><input type="number" name='price[]' value="@purchase_Bill_Item.Price" placeholder='' class="form-control price" step="0.00" min="0" /></td>
-                        <td class="col-md-1"><input type="text" name='unit[]' value="@purchase_Bill_Item.Unit" placeholder='' class="form-control unit" step="0.00" min="0" /></td>
-                        <td class="col-md-1"><input type="number" name='gst[]' value="@purchase_Bill_Item.GST" placeholder='' class="form-control gst" step="0" min="0" /></td>
-                        <td class="col-md-1"><input type="number" name='total[]' value="@purchase_Bill_Item.Amount" placeholder='0.00' class="form-control total" readonly /></td>
+                        <td class="col-md-1"><input type="number" value="@sales_Bill_Item.Quantity" name='qty[]' placeholder='' class="form-control qty" step="0" min="0" /></td>
+                        <td class="col-md-1"><input type="number" value="@sales_Bill_Item.Price" name='price[]' placeholder='' class="form-control price" step="0.00" min="0" /></td>
+                        <td class="col-md-1"><input type="text" value="@sales_Bill_Item.Unit" name='unit[]' placeholder='' class="form-control unit" step="0.00" min="0" /></td>
+                        <td class="col-md-1"><input type="number" value="@sales_Bill_Item.GST" name='gst[]' placeholder='' class="form-control gst" step="0" min="0" /></td>
+                        <td class="col-md-1"><input type="number" value="@sales_Bill_Item.Amount" name='total[]' placeholder='0.00' class="form-control total" readonly /></td>
                         <td class="col-md-1"><button id='delete_single_row' class="pull-right btn btn-danger">Delete</button></td>
                     </tr>
                 }
@@ -93,7 +91,6 @@
                 <button id="add_row" class="btn input-group-text btn-success pull-left">Add Row(s)</button>
             </div>
         </div>
-
         @*<button id='delete_row' class="pull-right btn btn-danger">Delete Row</button>*@
     </div>
 </div>
@@ -111,10 +108,9 @@
                     <td class="text-center"><input type="number" name='othexp' placeholder='0.00' class="form-control" id="other_Expenses" value="@ViewBag.OtherExpense" /></td>
                 </tr>
                 <tr>
-                    <th class="text-center">Transport Charge</th>
-                    <td class="text-center"><input type="number" name='trancharge' placeholder='0.00' class="form-control" id="Transport_Charges" value="@ViewBag.TransportCharge" /></td>
+                    <th class="text-center">Delivery</th>
+                    <td class="text-center"><input type="number" name='trancharge' placeholder='0.00' class="form-control" id="Transport_Charges" value="@ViewBag.Delivery" /></td>
                 </tr>
-
                 <tr>
                     <th class="text-center">Payment</th>
                     <td class="text-center">
@@ -141,6 +137,7 @@
                                     <label class="custom-control-label" for="paypal">Credit</label>
                                 </div>
                             }
+
                         </div>
                     </td>
                 </tr>
@@ -152,7 +149,7 @@
             <tbody>
                 <tr>
                     <th class="text-center">Sub Total</th>
-                    <td class="text-center"><input type="number" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" value="@ViewBag.SubTotal" readonly /></td>
+                    <td class="text-center"><input type="number" name='sub_total' placeholder='0.00' class="form-control" id="sub_total" value="@ViewBag.Subtotal" readonly /></td>
                 </tr>
                 <tr>
                     <th class="text-center">GST</th>
@@ -165,7 +162,7 @@
                 </tr>
                 <tr>
                     <th class="text-center">GST Amount</th>
-                    <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' class="form-control" value="@ViewBag.GSTAmount" readonly /></td>
+                    <td class="text-center"><input type="number" name='tax_amount' id="tax_amount" placeholder='0.00' value="@ViewBag.GSTAmount" class="form-control" readonly /></td>
                 </tr>
                 <tr>
                     <th class="text-center">Discount</th>
@@ -178,11 +175,9 @@
                 </tr>
                 <tr>
                     <th class="text-center">Grand Total</th>
-                    <td class="text-center"><input type="number" name='total_amount' id="total_amount" placeholder='0.00' class="form-control" value="@ViewBag.GrandTotal" readonly /></td>
+                    <td class="text-center"><input type="number" name='total_amount' id="total_amount" placeholder='0.00' value="@ViewBag.GrantTotal" class="form-control" readonly /></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-
-

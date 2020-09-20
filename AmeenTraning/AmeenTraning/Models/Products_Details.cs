@@ -18,6 +18,7 @@ namespace AmeenTraning.Models
         public Products_Details()
         {
             this.Purchase_Bill_Item = new HashSet<Purchase_Bill_Item>();
+            this.Sales_Bill_item = new HashSet<Sales_Bill_item>();
         }
     
         public int Product_Id { get; set; }
@@ -34,5 +35,7 @@ namespace AmeenTraning.Models
         public virtual Company_Details Company_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Purchase_Bill_Item> Purchase_Bill_Item { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sales_Bill_item> Sales_Bill_item { get; set; }
     }
 }

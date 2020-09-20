@@ -122,6 +122,9 @@
     <EntitySetMapping Name="Purchase_Bill">
       <EntityTypeMapping TypeName="TrainingModel.Purchase_Bill">
         <MappingFragment StoreEntitySet="Purchase_Bill">
+          <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+          <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
           <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
           <ScalarProperty Name="Payment_Mode" ColumnName="Payment_Mode" />
           <ScalarProperty Name="Other_Expenses" ColumnName="Other_Expenses" />
@@ -140,6 +143,8 @@
     <EntitySetMapping Name="Purchase_Bill_Item">
       <EntityTypeMapping TypeName="TrainingModel.Purchase_Bill_Item">
         <MappingFragment StoreEntitySet="Purchase_Bill_Item">
+          <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
           <ScalarProperty Name="Lots_Group" ColumnName="Lots_Group" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="GST" ColumnName="GST" />
@@ -150,6 +155,62 @@
           <ScalarProperty Name="Product_id" ColumnName="Product_id" />
           <ScalarProperty Name="Purchase_Bill_ID" ColumnName="Purchase_Bill_ID" />
           <ScalarProperty Name="Purchase_item_ID" ColumnName="Purchase_item_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales_Bill">
+      <EntityTypeMapping TypeName="TrainingModel.Sales_Bill">
+        <MappingFragment StoreEntitySet="Sales_Bill">
+          <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Payment_Mode" ColumnName="Payment_Mode" />
+          <ScalarProperty Name="Delivery" ColumnName="Delivery" />
+          <ScalarProperty Name="Other_Expenses" ColumnName="Other_Expenses" />
+          <ScalarProperty Name="Total_Amount" ColumnName="Total_Amount" />
+          <ScalarProperty Name="GST_Amount" ColumnName="GST_Amount" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+          <ScalarProperty Name="Sales_Bill_No" ColumnName="Sales_Bill_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales_Bill_item">
+      <EntityTypeMapping TypeName="TrainingModel.Sales_Bill_item">
+        <MappingFragment StoreEntitySet="Sales_Bill_item">
+          <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Lots_Group" ColumnName="Lots_Group" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Sales_Bill_No" ColumnName="Sales_Bill_No" />
+          <ScalarProperty Name="Sales_Bill_item_ID" ColumnName="Sales_Bill_item_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stock_Details">
+      <EntityTypeMapping TypeName="TrainingModel.Stock_Details">
+        <MappingFragment StoreEntitySet="Stock_Details">
+          <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+          <ScalarProperty Name="Date_Modified" ColumnName="Date_Modified" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Total_Quantity" ColumnName="Total_Quantity" />
+          <ScalarProperty Name="Sales_Bill_ID" ColumnName="Sales_Bill_ID" />
+          <ScalarProperty Name="Purchase_Bill_ID" ColumnName="Purchase_Bill_ID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Stock_ID" ColumnName="Stock_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

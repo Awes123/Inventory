@@ -2,6 +2,276 @@
 @{
     ViewBag.Title = "Index";
 }
+<link href='~/Bootstrap-5/css/mdb.min.css' rel='stylesheet' />
+<!------ Include the above in your HEAD tag ---------->
+<section>
+    <div class='card mt-2'>
+        <div class='card-body'>
+            <div class='formbill'>
+                @Html.Action("IndexPartial", "Sales_Bill", new { area = "Inventory" })
+            </div>
+        </div>
+        <hr>
+        <section class='btns d-none  text-center mb-3'>
+            <a href="/Inventory/Sales_Bill/Index" class='btn btn-warning'>Back to list</a>
+            <button class='btnSubmit btn btn-success'>Save</button>
+            <button class='btnCancel btn btn-primary'>Save and Print</button>
+            <label class='text-danger'></label>
+        </section>
+    </div>
+</section>
+<script src='//code.jquery.com/jquery-1.11.1.min.js'></script>
+<script src='~/Scripts/jquery-1.10.2.js'></script>
+<script>
+    $(document).ready(function () {
+        var i = 1;
+        $(document).on('click', '.btnadd', function () {
+          debugger
+            $.get('/Inventory/Sales_Bill/CreatePartial', function (response) {
+                $('.btns').removeClass('d-none');
+                $('.formbill').empty();
+                $('.formbill').append(response);
+            });
+        });
+        $(document).on('click', '#add_row',function () {
+        debugger
+            var number = $('#adrows').val();
+            var sr = $('#tab_logic >tbody >tr').length;
+            for (var a = 1; a <= number; a++) {
 
-<h2> Sales Index</h2>
+                sr++;
+                 $(".tody").append("<tr><td>" + sr + "</td><td><select class='form-control product' name='product[]'><option selected disabled>Select Product</option>@foreach (AmeenTraning.Models.Products_Details product in ViewBag.Products){<option id='@product.Product_Id'>@product.Name</option>}</select></td><td><input type='number' name='qty[]' placeholder='' class='form-control qty' step='0' min='0'/></td><td><input type='number' name='price[]' placeholder='' class='form-control price' step='0.00' min='0'/></td><td><input type='text' name='unit[]' placeholder='' class='form-control unit' step='0.00' min='0'/></td><td><input type='number' name='gst[]' placeholder='' class='form-control gst' step='0' min='0' /></td><td><input type='number' name='total[]' placeholder='0.00' class='form-control total' readonly/></td><td><button id='delete_single_row' class='pull-right btn btn-danger'>Delete</button></td></td>");
+            }
 
+        });
+        $(document).on('click', '#delete_single_row', function () {
+
+            //if (i > 1) {
+            //    $('#addr' + (i - 1)).html('');
+            //    i--;
+            //}
+            //calc();
+
+            $(this).parent('td').parent('tr').remove();
+            calc_total();
+        });
+
+        $(document).on('keyup change', '#tab_logic tbody', function () {
+            calc();
+        });
+        $('#tax').on('keyup change', function () {
+            calc_total();
+        });
+
+
+    });
+    $('.delete_single_row').click(function () {
+
+        $(this).parent('tr').empty();
+
+    });
+
+    function calc() {
+       debugger
+        $('#tab_logic tbody tr').each(function (i, element) {
+            var html = $(this).html();
+            if (html != '') {
+                var qty = $(this).find('.qty').val();
+                var gst = $(this).find('.gst').val();
+                var price = $(this).find('.price').val();
+                var total = qty * price;
+                $(this).attr('id', total )
+                $(this).find('.total').val((total / 100 * gst) + total);
+            }
+        });
+        calc_total();
+    }
+
+    function calc_total()
+    {
+        debugger
+        total = 0;
+        $('.total').each(function () {
+            total += parseInt($(this).val());
+        });
+        var price = 0;
+        $('#tab_logic tbody tr').each(function () {
+            price += parseInt($(this).attr('id'));
+        });
+        eachgst()
+        $('#sub_total').val(price.toFixed(2));
+        var subtotal = parseInt($('#sub_total').val());
+        tax_sum = subtotal / 100 * $('#tax').val();
+        $('#tax_amount').val(tax_sum.toFixed(2));
+        $('#total_amount').val(subtotal + tax_sum);
+        var other_Expense = parseInt($('#other_Expenses').val());
+        var Transcharges = parseInt($('#Transport_Charges').val());
+        var sum = 0;
+
+    }
+
+    function eachgst()
+    {
+       debugger
+        var grnTotal = 0;
+        $(".gst").each(function () {
+            var gst = parseFloat($(this).val());
+            grnTotal += isNaN(gst) ? 0 : gst;
+        });
+        $('#tax').val(grnTotal.toFixed(2));
+    }
+
+   // Other expenses and transport charges
+    $(document).on("keyup change", "#Transport_Charges", function () {
+        debugger
+        OtherCharge()
+    });
+    $(document).on("keyup change", "#other_Expenses", function () {
+        debugger
+        OtherCharge()
+    });
+    function OtherCharge()
+    {
+        debugger;
+        calc_total();
+        var grant_total = parseInt($('#total_amount').val());
+        var other_Expense = parseInt($('#other_Expenses').val());
+        var Transcharges = parseInt($('#Transport_Charges').val());
+        var sum = 0;
+        if ($.isNumeric(other_Expense) && $.isNumeric(Transcharges)) {
+            sum = parseInt(grant_total + other_Expense + Transcharges);
+            $('#total_amount').val(sum);
+        }
+        else if ($.isNumeric(other_Expense)) {
+            sum = parseInt(grant_total + other_Expense);
+            $('#total_amount').val(sum);
+        }
+        else if ($.isNumeric(Transcharges)) {
+            sum = parseInt(grant_total + Transcharges);
+            $('#total_amount').val(sum);
+        }
+        else {
+            calc_total();
+        }
+    }
+
+    // Discount
+    $(document).on("keyup change", "#disc", function () {
+        discount()
+    });
+    function discount()
+    {
+        debugger
+        calc_total();
+        debugger
+        OtherCharge()
+        var grant_total = parseInt($('#total_amount').val());
+        var disc = parseInt($('#disc').val());
+        var discounted_price;
+        if ($.isNumeric(grant_total) && $.isNumeric(disc)) {
+            discounted_price = parseInt(grant_total - (grant_total * disc / 100));
+            $('#total_amount').val(discounted_price);
+        }
+        else {
+            calc_total();
+            OtherCharge()
+        }
+    }
+    var Id = 0;
+    //Subit Function
+    $(document).on('click','.btnSubmit', function () {
+        debugger
+        var Subtotal = $('#sub_total').val();
+        var GST = $('#tax').val();
+        var GSTamount = $('#tax_amount').val();
+        var Discount = $('#disc').val();
+        var GrandTotal = $('#total_amount').val();
+        var Customer_ID = $(".supplier option:selected").attr('id');
+        var Quantity = $('#tab_logic >tbody >tr').length;
+        var delivery = $('#Transport_Charges').val();
+        var OtherExpences = $('#other_Expenses').val();
+        var Comment = $('#exampleFormControlTextarea1').val();
+        var PaymentMode = $("input[name='paymentMethod']:checked").val();
+
+        $.post('/Inventory/Sales_Bill/Add', { GSTamount, Discount, GrandTotal, Customer_ID, Quantity, delivery, OtherExpences, Comment, PaymentMode, Subtotal, GST, Id},
+            function (data, status) {
+                debugger
+                if (data != 0)
+                {
+                    Id = 0;
+                    $('#tab_logic tbody tr').each(function (i, element) {
+                        debugger
+                        var qty = $(this).find('.qty').val();
+                        var gst = $(this).find('.gst').val();
+                        var price = $(this).find('.price').val();
+                        var prodocut_Id = $(this).find(".product option:selected").attr('id');
+                        var discount = $('#disc').val();
+                        var unit = $(this).find('.unit').val();
+                        var amount = $(this).find('.total').val();
+                        var bill_No = data;
+                        var itemid = $(this).find('.itemid').attr('id');
+                        $.post('/Inventory/Sales_Bill/Add_Item', { qty, gst, price, prodocut_Id, discount, unit, amount, bill_No, itemid},
+                            function (data, status) {
+                                
+                            });
+
+                    });
+
+
+                    LoadProjects();
+                    Swal.fire(
+                        'Suceed!',
+                        data,
+                        'success'
+                    )
+                }
+            });
+    });
+    function LoadProjects() {
+        $.get('/Inventory/Sales_Bill/IndexPartial', function (response) {
+            $('.formbill').empty();
+            $('.formbill').append(response);
+            $('.btns').addClass('d-none');
+        });
+    }
+
+
+    // delete
+    $(document).on('click', '.btndelete', function () {
+        var id = $(this).attr('Id');
+        Id = id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this Unit & related data will also!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                $.get('/Inventory/Sales_Bill/Delete?id=' + id, function (response) {
+                    LoadProjects();
+                    Id = 0;
+                })
+            } else {
+                Swal.fire(
+                    'Cancelled',
+                    'Unit is active :)',
+                    'error'
+                )
+            }
+        });
+    });
+
+    $(document).on('click', '.btnEdit', function () {
+        debugger
+        var id = $(this).attr('Id');
+        Id = id;
+        $.get('/Inventory/Sales_Bill/Edit?id=' + id, function (response) {
+            $('.formbill').empty();
+            $('.formbill').append(response);
+            $('.btns').removeClass('d-none');
+        });
+    })
+
+</script>

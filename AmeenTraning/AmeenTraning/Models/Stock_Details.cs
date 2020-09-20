@@ -12,21 +12,21 @@ namespace AmeenTraning.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Purchase_Bill_Item
+    public partial class Stock_Details
     {
-        public int Purchase_item_ID { get; set; }
-        public Nullable<int> Purchase_Bill_ID { get; set; }
-        public Nullable<int> Product_id { get; set; }
+        public int Stock_ID { get; set; }
+        public Nullable<int> Product_ID { get; set; }
         public Nullable<decimal> Quantity { get; set; }
-        public string Unit { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> GST { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public string Lots_Group { get; set; }
+        public Nullable<int> Purchase_Bill_ID { get; set; }
+        public Nullable<int> Sales_Bill_ID { get; set; }
+        public Nullable<decimal> Total_Quantity { get; set; }
+        public string Type { get; set; }
         public Nullable<System.DateTime> Date_Created { get; set; }
         public Nullable<System.DateTime> Date_Modified { get; set; }
+        public Nullable<int> Item_ID { get; set; }
     
-        public virtual Products_Details Products_Details { get; set; }
+        public virtual Sales_Bill Sales_Bill { get; set; }
+        public virtual Stock_Details Stock_Details1 { get; set; }
+        public virtual Stock_Details Stock_Details2 { get; set; }
     }
 }

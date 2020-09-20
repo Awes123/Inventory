@@ -64,6 +64,25 @@
       <End Role="Supplier_Details" EntitySet="Supplier_Details" />
       <End Role="Purchase_Bill" EntitySet="Purchase_Bill" />
     </AssociationSet>
+    <EntitySet Name="Sales_Bill" EntityType="TrainingModel.Sales_Bill" />
+    <EntitySet Name="Sales_Bill_item" EntityType="TrainingModel.Sales_Bill_item" />
+    <EntitySet Name="Stock_Details" EntityType="TrainingModel.Stock_Details" />
+    <AssociationSet Name="FK_Sales_Bill_Customer_Details" Association="TrainingModel.FK_Sales_Bill_Customer_Details">
+      <End Role="Customer_Details" EntitySet="Customer_Details" />
+      <End Role="Sales_Bill" EntitySet="Sales_Bill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_Bill_item_ID_Products_Details" Association="TrainingModel.FK_Sales_Bill_item_ID_Products_Details">
+      <End Role="Products_Details" EntitySet="Products_Details" />
+      <End Role="Sales_Bill_item" EntitySet="Sales_Bill_item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stock_Details_Sales_Bill" Association="TrainingModel.FK_Stock_Details_Sales_Bill">
+      <End Role="Sales_Bill" EntitySet="Sales_Bill" />
+      <End Role="Stock_Details" EntitySet="Stock_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stock_Details_Stock_Details" Association="TrainingModel.FK_Stock_Details_Stock_Details">
+      <End Role="Stock_Details" EntitySet="Stock_Details" />
+      <End Role="Stock_Details1" EntitySet="Stock_Details" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Category_Details">
     <Key>
@@ -122,6 +141,7 @@
     <Property Name="Date_Created" Type="DateTime" Precision="3" />
     <Property Name="Date_Modified" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Customer_Details_Company_Details" FromRole="Customer_Details" ToRole="Company_Details" />
+    <NavigationProperty Name="Sales_Bill" Relationship="TrainingModel.FK_Sales_Bill_Customer_Details" FromRole="Customer_Details" ToRole="Sales_Bill" />
   </EntityType>
   <EntityType Name="Products_Details">
     <Key>
@@ -139,6 +159,7 @@
     <NavigationProperty Name="Category_Details" Relationship="TrainingModel.FK_Products_Details_Category_Details" FromRole="Products_Details" ToRole="Category_Details" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Products_Details_Company_Details" FromRole="Products_Details" ToRole="Company_Details" />
     <NavigationProperty Name="Purchase_Bill_Item" Relationship="TrainingModel.FK_Purchase_Bill_Item_Products_Details" FromRole="Products_Details" ToRole="Purchase_Bill_Item" />
+    <NavigationProperty Name="Sales_Bill_item" Relationship="TrainingModel.FK_Sales_Bill_item_ID_Products_Details" FromRole="Products_Details" ToRole="Sales_Bill_item" />
   </EntityType>
   <EntityType Name="Supplier_Details">
     <Key>
@@ -169,7 +190,7 @@
     <Property Name="Company_Id" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Date_Created" Type="DateTime" Precision="3" />
-    <Property Name="Date_Modified" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
     <Property Name="Created_By" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Modified_By" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Company_Details" Relationship="TrainingModel.FK_Units_Details_Company_Details" FromRole="Units_Details" ToRole="Company_Details" />
@@ -275,6 +296,9 @@
     <Property Name="Payment_Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Supplier_Details" Relationship="TrainingModel.FK_Purchase_Bill_Supplier_Details" FromRole="Purchase_Bill" ToRole="Supplier_Details" />
     <Property Name="Company_Id" Type="Int32" />
+    <Property Name="GST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SubTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Purchase_Bill_Item">
     <Key>
@@ -291,6 +315,8 @@
     <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Lots_Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Products_Details" Relationship="TrainingModel.FK_Purchase_Bill_Item_Products_Details" FromRole="Purchase_Bill_Item" ToRole="Products_Details" />
+    <Property Name="Date_Created" Type="DateTime" Precision="3" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK_Purchase_Bill_Item_Products_Details">
     <End Type="TrainingModel.Products_Details" Role="Products_Details" Multiplicity="0..1" />
@@ -313,6 +339,113 @@
       </Principal>
       <Dependent Role="Purchase_Bill">
         <PropertyRef Name="Supplier_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Sales_Bill">
+    <Key>
+      <PropertyRef Name="Sales_Bill_No" />
+    </Key>
+    <Property Name="Sales_Bill_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Company_ID" Type="Int32" />
+    <Property Name="Customer_ID" Type="Int32" />
+    <Property Name="Date_Created" Type="DateTime" Precision="3" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GST_Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Total_Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Other_Expenses" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Delivery" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Payment_Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SubTotal" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Customer_Details" Relationship="TrainingModel.FK_Sales_Bill_Customer_Details" FromRole="Sales_Bill" ToRole="Customer_Details" />
+    <NavigationProperty Name="Stock_Details" Relationship="TrainingModel.FK_Stock_Details_Sales_Bill" FromRole="Sales_Bill" ToRole="Stock_Details" />
+  </EntityType>
+  <EntityType Name="Sales_Bill_item">
+    <Key>
+      <PropertyRef Name="Sales_Bill_item_ID" />
+    </Key>
+    <Property Name="Sales_Bill_item_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Sales_Bill_No" Type="Int32" />
+    <Property Name="Product_ID" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Lots_Group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Date_Created" Type="DateTime" Precision="3" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Products_Details" Relationship="TrainingModel.FK_Sales_Bill_item_ID_Products_Details" FromRole="Sales_Bill_item" ToRole="Products_Details" />
+  </EntityType>
+  <EntityType Name="Stock_Details">
+    <Key>
+      <PropertyRef Name="Stock_ID" />
+    </Key>
+    <Property Name="Stock_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Product_ID" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Purchase_Bill_ID" Type="Int32" />
+    <Property Name="Sales_Bill_ID" Type="Int32" />
+    <Property Name="Total_Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="DateTime" Precision="3" />
+    <Property Name="Date_Modified" Type="DateTime" Precision="3" />
+    <Property Name="Item_ID" Type="Int32" />
+    <NavigationProperty Name="Sales_Bill" Relationship="TrainingModel.FK_Stock_Details_Sales_Bill" FromRole="Stock_Details" ToRole="Sales_Bill" />
+    <NavigationProperty Name="Stock_Details1" Relationship="TrainingModel.FK_Stock_Details_Stock_Details" FromRole="Stock_Details" ToRole="Stock_Details1" />
+    <NavigationProperty Name="Stock_Details2" Relationship="TrainingModel.FK_Stock_Details_Stock_Details" FromRole="Stock_Details1" ToRole="Stock_Details" />
+  </EntityType>
+  <Association Name="FK_Sales_Bill_Customer_Details">
+    <End Type="TrainingModel.Customer_Details" Role="Customer_Details" Multiplicity="0..1" />
+    <End Type="TrainingModel.Sales_Bill" Role="Sales_Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Details">
+        <PropertyRef Name="Customer_Id" />
+      </Principal>
+      <Dependent Role="Sales_Bill">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_Bill_item_ID_Products_Details">
+    <End Type="TrainingModel.Products_Details" Role="Products_Details" Multiplicity="0..1" />
+    <End Type="TrainingModel.Sales_Bill_item" Role="Sales_Bill_item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products_Details">
+        <PropertyRef Name="Product_Id" />
+      </Principal>
+      <Dependent Role="Sales_Bill_item">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stock_Details_Sales_Bill">
+    <End Type="TrainingModel.Sales_Bill" Role="Sales_Bill" Multiplicity="0..1" />
+    <End Type="TrainingModel.Stock_Details" Role="Stock_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales_Bill">
+        <PropertyRef Name="Sales_Bill_No" />
+      </Principal>
+      <Dependent Role="Stock_Details">
+        <PropertyRef Name="Sales_Bill_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stock_Details_Stock_Details">
+    <End Type="TrainingModel.Stock_Details" Role="Stock_Details" Multiplicity="1" />
+    <End Type="TrainingModel.Stock_Details" Role="Stock_Details1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Stock_Details">
+        <PropertyRef Name="Stock_ID" />
+      </Principal>
+      <Dependent Role="Stock_Details1">
+        <PropertyRef Name="Stock_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -12,24 +12,32 @@ namespace AmeenTraning.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Purchase_Bill
+    public partial class Sales_Bill
     {
-        public int Bill_No { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Sales_Bill()
+        {
+            this.Stock_Details = new HashSet<Stock_Details>();
+        }
+    
+        public int Sales_Bill_No { get; set; }
+        public Nullable<int> Company_ID { get; set; }
+        public Nullable<int> Customer_ID { get; set; }
         public Nullable<System.DateTime> Date_Created { get; set; }
-        public Nullable<int> Supplier_ID { get; set; }
+        public Nullable<System.DateTime> Date_Modified { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<decimal> GST_Amount { get; set; }
         public Nullable<decimal> Total_Amount { get; set; }
-        public string Comment { get; set; }
-        public Nullable<decimal> Transport_Charges { get; set; }
         public Nullable<decimal> Other_Expenses { get; set; }
+        public Nullable<decimal> Delivery { get; set; }
         public string Payment_Mode { get; set; }
-        public Nullable<int> Company_Id { get; set; }
+        public string Comment { get; set; }
         public Nullable<decimal> GST { get; set; }
         public Nullable<decimal> SubTotal { get; set; }
-        public Nullable<System.DateTime> Date_Modified { get; set; }
     
-        public virtual Supplier_Details Supplier_Details { get; set; }
+        public virtual Customer_Details Customer_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Stock_Details> Stock_Details { get; set; }
     }
 }

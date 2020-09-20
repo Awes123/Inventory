@@ -12,11 +12,11 @@ namespace AmeenTraning.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Purchase_Bill_Item
+    public partial class Sales_Bill_item
     {
-        public int Purchase_item_ID { get; set; }
-        public Nullable<int> Purchase_Bill_ID { get; set; }
-        public Nullable<int> Product_id { get; set; }
+        public int Sales_Bill_item_ID { get; set; }
+        public Nullable<int> Sales_Bill_No { get; set; }
+        public Nullable<int> Product_ID { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public string Unit { get; set; }
         public Nullable<decimal> Price { get; set; }
@@ -24,6 +24,7 @@ namespace AmeenTraning.Models
         public Nullable<decimal> GST { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public string Lots_Group { get; set; }
+        public Nullable<decimal> Total { get; set; }
         public Nullable<System.DateTime> Date_Created { get; set; }
         public Nullable<System.DateTime> Date_Modified { get; set; }
     
